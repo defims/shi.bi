@@ -1,0 +1,15 @@
+{
+  "include": ["./"],
+  "paths": {
+    "src": ["node_modules"]
+  },
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+  }
+}

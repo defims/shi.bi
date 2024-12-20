@@ -1,0 +1,25 @@
+{
+  "name": "shi.bi",
+  "description": "Command Shì'Bì maid to automate the browser from any webpage with JSON, which compatible with Chrome DevTools Recorder recordings.",
+  "private": true,
+  "scripts": {
+    "build": "node ./build.js",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@puppeteer/replay": "^3.0.0",
+    "buffer": "^6.0.3",
+    "puppeteer-core": "^23.1.0"
+  },
+  "devDependencies": {
+    "@frida/path": "^2.0.3",
+    "@types/chrome": "^0.0.268",
+    "@types/node": "^18.8.5",
+    "devtools-protocol": "^0.0.1286932",
+    "esbuild": "^0.15.11",
+    "esbuild-copy-static-files": "^0.1.0",
+    "esbuild-plugin-tsc": "^0.4.0",
+    "process": "^0.11.10",
+    "typescript": "^4.9.5"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "shi.bi",
+  "version": "0.0.1",
+  "description": "Command Shì'Bì maid to automate the browser from any webpage with JSON, which compatible with Chrome DevTools Recorder recordings.",
+  "permissions": ["tabs", "debugger", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "icons": {
+    "16": "./logo.png",
+    "32": "./logo.png",
+    "48": "./logo.png",
+    "128": "./logo.png"
+  }
+}
