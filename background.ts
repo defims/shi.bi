@@ -6,23 +6,25 @@ import { EMessageType } from './utils/constants'
 import { handlePuppeteerJson } from './message-handler/puppeteer-json'
 // import { handleRegisterSameOriginProxyPage } from './message-handler/register-same-origin-proxy-page'
 
+// onMessageExternal
+let onMessageExternalRequestId = 0
 chrome.runtime.onMessageExternal.addListener(
   async (
     request: {
       type: EMessageType,
       payload?: UserFlow,
-      id: string
     },
     sender,
     sendResponse
   ) => {
-    console.log(request.id, 'onMessageExternal', {request, sender, sendResponse});
+    const id = String(onMessageExternalRequestId ++)
+    console.log(id, 'onMessageExternal', {request, sender, sendResponse});
 
     // use puppeteer js script https://github.com/gajananpp/puppeteer-ide-extension/blob/ffe2955ef02a1178e4c6f5236eadd0d7a4ccf196/src/devtools/sandbox/lib/executeScript.ts#L44C24-L44C37
     try {
       let result
       if (request?.type === EMessageType.puppeteerJson) {
-        result = await handlePuppeteerJson({ request, sender })
+        result = await handlePuppeteerJson({ id, request, sender })
       } else if (request?.type === EMessageType.getCurrentOriginBlobUrl) { // regiester window.addEventListener('message', )
 
         // const urls = ["https://example.com/shi.bi"]
@@ -191,10 +193,10 @@ chrome.runtime.onMessageExternal.addListener(
       // } else if (request?.type === EMessageType.registerSameOriginProxyPage) {
         // result = await handleRegisterSameOriginProxyPage({request, sender})
       }
-      sendResponse({request, sender, response: {success: true, id: request.id, result}})
+      sendResponse({request, sender, response: {success: true, id, result}})
     } catch(error) {
       console.error(error)
-      sendResponse({request, sender, response: {success: false, id: request.id, error}})
+      sendResponse({request, sender, response: {success: false, id, error}})
     }
   }
 )

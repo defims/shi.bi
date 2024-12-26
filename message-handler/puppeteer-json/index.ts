@@ -248,12 +248,13 @@ export class Extension extends PuppeteerRunnerExtension {
 
 export const handlePuppeteerJson = async ({
   request,
+  id,
   sender,
 }: {
+  id: string,
   request: {
     type: EMessageType,
     payload?: UserFlow,
-    id: string
   },
   sender: chrome.runtime.MessageSender,
 }) => {
@@ -264,7 +265,7 @@ export const handlePuppeteerJson = async ({
     const firstNavigatorUrl = navigateContext.getContext()[0].url
     const tab = await chrome.tabs.create({ url: firstNavigatorUrl })
 
-    console.log(request.id, {tab, sender, recording});
+    console.log(id, {tab, sender, recording});
 
     if (sender.tab?.id && tab.id) {
       // sender raw cdp, target puppeteer
@@ -289,17 +290,17 @@ export const handlePuppeteerJson = async ({
         page,
       })
 
-      const extension = new Extension(request.id, senderDebuggee, browser, page, {timeout: 7000})
+      const extension = new Extension(id, senderDebuggee, browser, page, {timeout: 7000})
       const runner = await createRunner(recording, extension)
-      console.log(request.id, {runner})
+      console.log(id, {runner})
       await runner.run()
       const result = extension.result
 
-      console.log(request.id, {result})
+      console.log(id, {result})
       // proxy result urls
       await browser.close()
       // await senderBrowser.close()
-      console.log(request.id, "close", {result})
+      console.log(id, "close", {result})
 
       return result
     }

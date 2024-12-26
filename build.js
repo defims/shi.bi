@@ -22,7 +22,7 @@ esbuild.build({
   entryPoints: ['./background.ts'],
   outdir: './dist/',
   bundle: true,
-  minify: false,
+  minify: true,
   sourcemap: false,
   watch: false,
   external: [
@@ -48,8 +48,8 @@ esbuild.build({
       dest: './dist/manifest.json',
     }),
     copyStaticFiles({
-      src: './logo.png',
-      dest: './dist/logo.png',
+      src: './icons',
+      dest: './dist/icons',
     }),
   ],
 });
