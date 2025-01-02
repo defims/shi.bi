@@ -1,8 +1,8 @@
-import { CustomStepName, EnhancedCustomStep, EnhancedUserFlow } from '../'
+import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow } from '../'
 import { loopParentChildrenMap } from './loop'
 
-export type CustomBreakStep = EnhancedCustomStep & {
-  name: CustomStepName.Break
+export type BreakStep = EnhancedBaseStep & {
+  type: EnhancedStepType.Break
 }
 export const before = async ({
   id,
@@ -10,18 +10,18 @@ export const before = async ({
   flow,
 }: {
   id: string,
-  step: CustomBreakStep,
+  step: BreakStep,
   flow: EnhancedUserFlow,
 }) => {
   const parentStep = loopParentChildrenMap.get(step)
-  const steps = parentStep?.parameters.steps ?? flow.steps
+  const steps = parentStep?.steps ?? flow.steps
   const stepIndex = steps.lastIndexOf(step);
   const parentStepIndex = parentStep
     ? steps.lastIndexOf(parentStep)
     : steps.length - 1;
   console.log(id, 'before customBreak step', {parentStep, steps, stepIndex, parentStepIndex})
   if(parentStep) {
-    parentStep.parameters.count = 0
+    parentStep.count = 0
   }
   // remove (stepIndex, parentStepIndex] steps
   if(parentStepIndex > stepIndex) {

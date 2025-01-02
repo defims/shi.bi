@@ -1,17 +1,20 @@
+// This step is deprecated.
 import {
   WaitForExpressionStep,
 } from '@puppeteer/replay';
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 
-import { EnhancedCustomStep, CustomStepName, EnhancedUserFlow } from '../'
+import { EnhancedBaseStep, EnhancedStepType, EnhancedUserFlow } from '../'
 
-export type CustomReturnExpressionStep = EnhancedCustomStep & {
-  name: CustomStepName.ReturnExpression,
-  parameters: Omit<WaitForExpressionStep, 'type'>
+export type ReturnExpressionStep = EnhancedBaseStep & Omit<
+  WaitForExpressionStep,
+  'type'
+> & {
+  type: EnhancedStepType.ReturnExpression,
 }
-export type CustomReturnExpressionStepReturn = {
+export type ReturnExpressionStepReturn = {
   result?: any,
-  name: CustomStepName.ReturnExpression
+  type: EnhancedStepType.ReturnExpression
 }
 export const before = async ({
   id,
@@ -20,11 +23,11 @@ export const before = async ({
   page,
 }: {
   id: string,
-  step: CustomReturnExpressionStep,
+  step: ReturnExpressionStep,
   flow: EnhancedUserFlow,
   page: Page,
-}): Promise<CustomReturnExpressionStepReturn> => {
-  const { expression } = step.parameters;
+}): Promise<ReturnExpressionStepReturn> => {
+  const { expression } = step;
   const result = await page.evaluate(expression);
 
   // remove remain steps
@@ -41,6 +44,6 @@ export const before = async ({
 
   return {
     result,
-    name: CustomStepName.ReturnExpression
+    type: EnhancedStepType.ReturnExpression
   }
 }

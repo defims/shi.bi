@@ -1,5 +1,4 @@
 import {
-  UserStep,
   ClickStep,
   selectorToPElementSelector,
   mouseButtonMap,
@@ -8,10 +7,10 @@ import {
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 
-import { EnhancedUserFlow, EnhancedCustomStep, CustomStepName} from '../'
+import { EnhancedUserFlow, EnhancedStepType, EnhancedBaseStep, EnhancedStep } from '../'
 import { getFrame } from '../utils'
 
-async function waitForEvents(pageOrFrame: Frame | Page, step: UserStep, timeout: number) {
+async function waitForEvents(pageOrFrame: Frame | Page, step: EnhancedStep, timeout: number) {
   const promises = [];
   if (step.assertedEvents) {
       for (const event of step.assertedEvents) {
@@ -30,11 +29,12 @@ async function waitForEvents(pageOrFrame: Frame | Page, step: UserStep, timeout:
   await Promise.all(promises);
 }
 
-export type CustomMultipleClicksStep = EnhancedCustomStep & {
-  name: CustomStepName.MultipleClicks,
-  parameters: Omit<ClickStep, 'type'> & {
-    count?: number,
-  }
+export type MultipleClicksStep = EnhancedBaseStep & Omit<
+  ClickStep,
+  'type'
+> & {
+  type: EnhancedStepType.MultipleClicks,
+  count?: number,
 }
 
 export const before = async ({
@@ -44,7 +44,7 @@ export const before = async ({
   flow,
 }: {
   id: string,
-  step: CustomMultipleClicksStep,
+  step: MultipleClicksStep,
   page: Page,
   flow: EnhancedUserFlow,
 }) => {
@@ -56,18 +56,18 @@ export const before = async ({
     assertedEventsPromise = waitForEvents(localFrame, step, timeout);
   };
   await page
-    .locatorRace(step.parameters.selectors.map((selector) => (
+    .locatorRace(step.selectors.map((selector) => (
       localFrame.locator(selectorToPElementSelector(selector))
     )))
     .setTimeout(timeout)
     .on('action', () => startWaitingForEvents())
     .click({
-    count: step.parameters.count ?? 1,
-    button: step.parameters.button && mouseButtonMap.get(step.parameters.button),
-    delay: step.parameters.duration,
+    count: step.count ?? 1,
+    button: step.button && mouseButtonMap.get(step.button),
+    delay: step.duration,
     offset: {
-      x: step.parameters.offsetX,
-      y: step.parameters.offsetY,
+      x: step.offsetX,
+      y: step.offsetY,
     },
   });
   await assertedEventsPromise;

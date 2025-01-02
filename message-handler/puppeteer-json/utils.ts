@@ -1,9 +1,11 @@
-import { UserStep, Selector } from '@puppeteer/replay';
+import { Selector } from '@puppeteer/replay';
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 import { ElementHandle } from 'puppeteer-core/lib/esm/puppeteer/api/ElementHandle'
 
-export async function getFrame(pageOrFrame: Frame | Page, step: UserStep) {
+import { EnhancedStep } from './index'
+
+export async function getFrame(pageOrFrame: Frame | Page, step: EnhancedStep) {
   let frame = 'mainFrame' in pageOrFrame ? pageOrFrame.mainFrame() : pageOrFrame;
   if ('frame' in step && step.frame) {
     for (const index of step.frame) {

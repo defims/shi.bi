@@ -5,21 +5,23 @@ import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 import { STATUS_TEXTS } from 'puppeteer-core/lib/esm/puppeteer/api/HTTPRequest.js'
 
-import { EnhancedCustomStep, CustomStepName } from '../'
+import { EnhancedBaseStep, EnhancedStepType } from '../'
 import { querySelectorsAll, getFrame } from '../utils'
 import { comparators } from '../constants'
 import { singletonDebugger } from '../../../utils/singleton-debugger'
-import { CustomReturnExpressionStepReturn } from './return-expression'
+import { ReturnExpressionStepReturn } from './return-expression'
 
-export type CustomReturnElementStep = EnhancedCustomStep & {
-  name: CustomStepName.ReturnElement,
-  parameters: Omit<WaitForElementStep, 'type'>
+export type ReturnElementStep = EnhancedBaseStep & Omit<
+  WaitForElementStep,
+  'type'
+> & {
+  type: EnhancedStepType.ReturnElement,
 }
-export type CustomReturnElementStepReturn = {
+export type ReturnElementStepReturn = {
   elements?: string[],
   styles?: string[],
   urls?: {[Url: string]: number[]},
-  name: CustomStepName.ReturnElement
+  type: EnhancedStepType.ReturnElement
 }
 
 const hookFetchResponse = async ({
@@ -71,25 +73,25 @@ export const before = async ({
   page,
 }: {
   id: string,
-  step: CustomReturnElementStep,
+  step: ReturnElementStep,
   page: Page,
-}): Promise<CustomReturnElementStepReturn> => {
+}): Promise<ReturnElementStepReturn> => {
   // refer to https://github.com/puppeteer/replay/blob/e2c85b98e497c9191eae5a2d23429588fcd5849e/src/PuppeteerRunnerExtension.ts#L356
   async function getElementsOuterHTML(
-    step: CustomReturnElementStep,
+    step: ReturnElementStep,
     frame: Frame | Page,
-  ): Promise<Omit<CustomReturnElementStepReturn, 'name'>> {
+  ): Promise<Omit<ReturnElementStepReturn, 'type'>> {
     const {
       count = 1,
       operator = '>=',
       visible = true,
       properties,
       attributes,
-    } = step.parameters;
+    } = step;
     const compFn = comparators[operator];
 
     // get all element tags
-    const elements = await querySelectorsAll(step.parameters.selectors, frame);
+    const elements = await querySelectorsAll(step.selectors, frame);
     const isCountMatch = compFn(elements.length, count);
     const elementsHandle = await frame.evaluateHandle(
       (...elements) => {
@@ -128,7 +130,7 @@ export const before = async ({
         return {
           outerHTML: result.map(element => element.outerHTML),
           urls: result
-            .reduce<NonNullable<CustomReturnElementStepReturn['urls']>>((acc, element, index) => {
+            .reduce<NonNullable<ReturnElementStepReturn['urls']>>((acc, element, index) => {
               // <img src="xxx" />
               Array
                 .from(element.querySelectorAll('[src]'))
@@ -196,7 +198,7 @@ export const before = async ({
         const result = [...styles]
         return {
           outerHTML: result.map(style => style.outerHTML),
-          urls: result.reduce<NonNullable<CustomReturnElementStepReturn['urls']>>((acc, style, index) => {
+          urls: result.reduce<NonNullable<ReturnElementStepReturn['urls']>>((acc, style, index) => {
             const outerHTML = style.outerHTML
             const reg = /url\s*\(\s*['"]\s*([^\)]+?)\s*['"]\s*\)/gim
             if(outerHTML) {
@@ -235,7 +237,7 @@ export const before = async ({
     elements,
     styles,
     urls,
-    name: CustomStepName.ReturnElement
+    type: EnhancedStepType.ReturnElement
   }
 }
 
@@ -246,12 +248,12 @@ export const after = async ({
   result,
 }: {
   id: string,
-  step: CustomReturnElementStep,
+  step: ReturnElementStep,
   senderDebuggee: chrome.debugger.Debuggee,
-  result: CustomReturnElementStepReturn | CustomReturnExpressionStepReturn | null
+  result: ReturnElementStepReturn | ReturnExpressionStepReturn | null
 }) => {
   // Handling CORS for returnElement
-  const {elements, styles, urls} = result as CustomReturnElementStepReturn // TODO
+  const {elements, styles, urls} = result as ReturnElementStepReturn // TODO
   console.log(id, "after customReturnElement step", {elements, urls})
 
   const findElements = (requestUrl: string) => (

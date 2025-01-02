@@ -1,28 +1,29 @@
 import {
   StepWithFrame,
 } from '@puppeteer/replay';
-import { EnhancedCustomStep, CustomStepName } from '../'
+import { EnhancedStepType, EnhancedBaseStep } from '../'
 
-export type CustomWaitTimeStep = EnhancedCustomStep & {
-  name: CustomStepName.WaitTime
-  parameters: Omit<StepWithFrame, 'timeout' | 'type'> & {
-    time: number,
-  }
+export type WaitTimeStep = EnhancedBaseStep & Omit<
+  StepWithFrame,
+ 'timeout' | 'type'
+> & {
+  type: EnhancedStepType.WaitTime,
+  time: number,
 }
 export const before = async ({
   id,
   step,
 }: {
   id: string,
-  step: CustomWaitTimeStep,
+  step: WaitTimeStep,
 }) => {
   const {
     time
-  } = step.parameters;
+  } = step;
   await new Promise(resolve => {
     setTimeout(() => {
       resolve(true)
     }, time)
   })
-  console.log(id, 'before customWaitTime step', {time});
+  console.log(id, 'before waitTime step', {time});
 }

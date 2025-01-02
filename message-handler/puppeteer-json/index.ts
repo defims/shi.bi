@@ -2,49 +2,80 @@ import { Puppeteer } from 'puppeteer-core/lib/esm/puppeteer/common/Puppeteer.js'
 import {
   createRunner,
   PuppeteerRunnerExtension,
-  Step,
-  CustomStep,
-  UserFlow,
   StepType,
-  StepWithTarget,
-  StepWithFrame,
+  BaseStep,
+  Step,
+  UserFlow,
+  ChangeStep,
+  ClickStep,
+  HoverStep,
+  CloseStep,
+  CustomStep,
+  DoubleClickStep,
+  EmulateNetworkConditionsStep,
+  KeyDownStep,
+  KeyUpStep,
   NavigateStep,
+  ScrollStep,
+  SetViewportStep,
+  WaitForElementStep,
+  WaitForExpressionStep,
 } from '@puppeteer/replay';
-export { StepType } from '@puppeteer/replay'
 import { Browser } from 'puppeteer-core/lib/esm/puppeteer/api/Browser'
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 
 import { ExtensionDebuggerTransport } from './extension-debugger-transport';
 import { EMessageType } from '../../utils/constants'
-import { singletonDebugger } from '../../utils/singleton-debugger'
-import { before as beforeUploadStep, CustomUploadStep } from './step-handler/upload'
-import { before as beforeMultipleClicksStep, CustomMultipleClicksStep } from './step-handler/multiple-clicks'
-import { before as beforeWaitTimeStep, CustomWaitTimeStep } from './step-handler/wait-time'
-import { before as beforeLoopStep, CustomLoopStep } from './step-handler/loop'
-import { before as beforeIfElementStep, CustomIfElementStep } from './step-handler/if-element'
-import { before as beforeIfExpressionStep, CustomIfExpressionStep } from './step-handler/if-expression'
-import { before as beforeBreakStep, CustomBreakStep } from './step-handler/break'
+import { before as beforeUploadStep, UploadStep } from './step-handler/upload'
+import { before as beforeMultipleClicksStep, MultipleClicksStep } from './step-handler/multiple-clicks'
+import { before as beforeWaitTimeStep, WaitTimeStep } from './step-handler/wait-time'
+import { before as beforeLoopStep, LoopStep } from './step-handler/loop'
+import { before as beforeIfElementStep, IfElementStep } from './step-handler/if-element'
+import { before as beforeIfExpressionStep, IfExpressionStep } from './step-handler/if-expression'
+import { before as beforeBreakStep, BreakStep } from './step-handler/break'
 import {
   before as beforeReturnElementStep,
   after as afterReturnElementStep,
-  CustomReturnElementStep,
-  CustomReturnElementStepReturn
+  ReturnElementStep,
+  ReturnElementStepReturn
 } from './step-handler/return-element'
 import {
   before as beforeReturnExpressionStep,
-  CustomReturnExpressionStep,
-  CustomReturnExpressionStepReturn
+  ReturnExpressionStep,
+  ReturnExpressionStepReturn
 } from './step-handler/return-expression'
 import {
   after as afterNavigateStep,
   navigateContext,
 } from './step-handler/navigate'
 
-export type EnhancedUserFlow = Omit<UserFlow, 'steps'> & { steps: EnhancedStep[] }
+export type EnhancedBaseStep = Omit<
+  BaseStep,
+  'type'
+> & {
+  type: EnhancedStepType,
+  comment?: string,
+}
+export enum EnhancedStepType {
+  // @puppeteer/replay step type
+  Change = StepType.Change,
+  Click = StepType.Click,
+  Close = StepType.Close,
+  CustomStep = StepType.CustomStep,
+  DoubleClick = StepType.DoubleClick,
+  EmulateNetworkConditions = StepType.EmulateNetworkConditions,
+  Hover = StepType.Hover,
+  KeyDown = StepType.KeyDown,
+  KeyUp = StepType.KeyUp,
+  Navigate = StepType.Navigate,
+  Scroll = StepType.Scroll,
+  SetViewport = StepType.SetViewport,
+  WaitForElement = StepType.WaitForElement,
+  WaitForExpression = StepType.WaitForExpression,
 
-export enum CustomStepName {
-  Upload = "upload",
+  // additional step type
   MultipleClicks = "multipleClicks",
+  Upload = "upload",
   WaitTime = 'waitTime',
   Loop = "loop",
   IfElement = "ifElement",
@@ -54,12 +85,6 @@ export enum CustomStepName {
   ReturnExpression = "returnExpression",
 }
 
-export type EnhancedCustomStep = (StepWithTarget | StepWithFrame) & {
-  type: StepType.CustomStep;
-  comment?: string;
-  name: CustomStepName;
-};
-
 /**
  * enhance @puppeteer/replay step
  * The ::-p-xpath pseudo-element can function as an independent descendant selector (parent child), enabling features like size comparison that are not possible with the :has pseudo-class. e.g. `[class*=wrapper] ::-p-xpath(./*[contains(@class,"contents") and number(substring(translate(.//time/@datetime,"-T:.Z",""),0,15))>=20240723033030])+[class*=container]`
@@ -67,63 +92,80 @@ export type EnhancedCustomStep = (StepWithTarget | StepWithFrame) & {
  * Nested 'contains' methods require balanced parentheses. e.g. ::-p-xpath(./*[contains(substring(translate(.//time/@datetime,"-T:.Z",""),0,15),(("20240723033030")))])
  */
 export type EnhancedStep = (
-  | Exclude<Step, CustomStep> & { comment?: string }
-  | CustomUploadStep
-  | CustomMultipleClicksStep
-  | CustomWaitTimeStep
-  | CustomLoopStep
-  | CustomBreakStep
-  | CustomIfElementStep
-  | CustomIfExpressionStep
-  | CustomReturnElementStep
-  | CustomReturnExpressionStep
-)
+  | ({ comment?: string } & (
+    | Omit<ChangeStep, 'type'> & { type: EnhancedStepType.Change }
+    | Omit<ClickStep, 'type'> & { type: EnhancedStepType.Click }
+    | Omit<HoverStep, 'type'> & { type: EnhancedStepType.Hover }
+    | Omit<CloseStep, 'type'> & { type: EnhancedStepType.Close }
+    | Omit<CustomStep, 'type'> & { type: EnhancedStepType.CustomStep }
+    | Omit<DoubleClickStep, 'type'> & { type: EnhancedStepType.DoubleClick }
+    | Omit<EmulateNetworkConditionsStep, 'type'> & { type: EnhancedStepType.EmulateNetworkConditions }
+    | Omit<KeyDownStep, 'type'> & { type: EnhancedStepType.KeyDown }
+    | Omit<KeyUpStep, 'type'> & { type: EnhancedStepType.KeyUp }
+    | Omit<NavigateStep, 'type'> & { type: EnhancedStepType.Navigate }
+    | Omit<ScrollStep, 'type'> & { type: EnhancedStepType.Scroll }
+    | Omit<SetViewportStep, 'type'> & { type: EnhancedStepType.SetViewport }
+    | Omit<WaitForElementStep, 'type'> & { type: EnhancedStepType.WaitForElement }
+    | Omit<WaitForExpressionStep, 'type'> & { type: EnhancedStepType.WaitForExpression }
+  ))
 
-const hookFetchResponse = async ({
-  debuggee,
-  match,
-  handler,
-}: {
-  debuggee: chrome.debugger.Debuggee,
-  match: (params: any) => boolean,
-  handler: (params: any) => Promise<void>
-}) => {
-  await singletonDebugger.attach(debuggee)
-  // await chrome.debugger.attach(debuggee, "1.3")
-  await singletonDebugger.sendCommand(debuggee, "Fetch.enable", {
-  // await chrome.debugger.sendCommand(debuggee, "Fetch.enable", {
-    patterns: [
-      {
-        urlPattern: '*',
-        requestStage: 'Response',
-      },
-    ],
-  })
-  const fn = async (source: chrome.debugger.Debuggee, method: string, params: any) => {
-    if(method === "Fetch.requestPaused" && source.tabId === debuggee.tabId) { // TODO other debugee
-      if (params?.responseErrorReason === 'Failed' || !match(params)) {
-        await singletonDebugger.sendCommand(debuggee, "Fetch.continueResponse", {
-        // await chrome.debugger.sendCommand(debuggee, "Fetch.continueResponse", {
-          requestId: params.requestId
-        })
-      } else {
-        console.log('hookFetchResponse', {source, method, params})
-        await handler(params)
-      }
-    }
-  }
-  singletonDebugger.onEvent.addListener(fn)
-  // chrome.debugger.onEvent.addListener(fn)
-  return () => {
-    singletonDebugger.onEvent.removeListener(fn)
-    // chrome.debugger.onEvent.removeListener(fn)
-    singletonDebugger.detach(debuggee)
-    // chrome.debugger.detach(debuggee)
-  }
-}
+  | UploadStep
+  | MultipleClicksStep
+  | WaitTimeStep
+  | LoopStep
+  | IfElementStep
+  | IfExpressionStep
+  | BreakStep
+  | ReturnElementStep
+  | ReturnExpressionStep
+)
+export type EnhancedUserFlow = Omit<UserFlow, 'steps'> & { steps: EnhancedStep[] }
+
+// const hookFetchResponse = async ({
+//   debuggee,
+//   match,
+//   handler,
+// }: {
+//   debuggee: chrome.debugger.Debuggee,
+//   match: (params: any) => boolean,
+//   handler: (params: any) => Promise<void>
+// }) => {
+//   await singletonDebugger.attach(debuggee)
+//   // await chrome.debugger.attach(debuggee, "1.3")
+//   await singletonDebugger.sendCommand(debuggee, "Fetch.enable", {
+//   // await chrome.debugger.sendCommand(debuggee, "Fetch.enable", {
+//     patterns: [
+//       {
+//         urlPattern: '*',
+//         requestStage: 'Response',
+//       },
+//     ],
+//   })
+//   const fn = async (source: chrome.debugger.Debuggee, method: string, params: any) => {
+//     if(method === "Fetch.requestPaused" && source.tabId === debuggee.tabId) { // TODO other debugee
+//       if (params?.responseErrorReason === 'Failed' || !match(params)) {
+//         await singletonDebugger.sendCommand(debuggee, "Fetch.continueResponse", {
+//         // await chrome.debugger.sendCommand(debuggee, "Fetch.continueResponse", {
+//           requestId: params.requestId
+//         })
+//       } else {
+//         console.log('hookFetchResponse', {source, method, params})
+//         await handler(params)
+//       }
+//     }
+//   }
+//   singletonDebugger.onEvent.addListener(fn)
+//   // chrome.debugger.onEvent.addListener(fn)
+//   return () => {
+//     singletonDebugger.onEvent.removeListener(fn)
+//     // chrome.debugger.onEvent.removeListener(fn)
+//     singletonDebugger.detach(debuggee)
+//     // chrome.debugger.detach(debuggee)
+//   }
+// }
 
 export class Extension extends PuppeteerRunnerExtension {
-  result: CustomReturnElementStepReturn | CustomReturnExpressionStepReturn | null
+  result: ReturnElementStepReturn | ReturnExpressionStepReturn | null
 
   private id: string
   private senderDebuggee: chrome.debugger.Debuggee
@@ -144,82 +186,105 @@ export class Extension extends PuppeteerRunnerExtension {
   }
 
   async beforeEachStep(step: Step, flow: UserFlow) {
-    const enhancedStep = step as EnhancedStep
-    console.group(`${enhancedStep.type} ${
-      (step as any).name 
-      ?? (step as any).key
-      ?? ''
+    const enhancedStep = step as any as EnhancedStep
+    const enhancedFlow = flow as any as EnhancedUserFlow
+    console.group(`${
+      enhancedStep.type
+    } ${
+      (enhancedStep as any)?.name ?? ''
     }`)
     const id = this.id
     const page = this.page
     const senderDebuggee = this.senderDebuggee
-    console.log(id, 'beforeEachStep', enhancedStep.comment, {step, flow});
-    if(step.type === StepType.CustomStep && step.name === CustomStepName.Upload) {
+    console.log(
+      id,
+      'beforeEachStep',
+      enhancedStep.comment ?? (enhancedStep as any)?.key ?? '',
+      {enhancedStep, enhancedFlow}
+    );
+    if(enhancedStep.type === EnhancedStepType.Upload) {
       await beforeUploadStep({
         id,
-        step: step as CustomUploadStep,
+        step: enhancedStep as UploadStep,
         page,
         senderDebuggee
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.MultipleClicks) {
+    } else if(enhancedStep.type === EnhancedStepType.MultipleClicks) {
       await beforeMultipleClicksStep({
         id,
-        step: step as CustomMultipleClicksStep,
+        step: enhancedStep as MultipleClicksStep,
         page,
-        flow: flow as EnhancedUserFlow,
+        flow: enhancedFlow,
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.WaitTime) {
+    } else if(enhancedStep.type === EnhancedStepType.WaitTime) {
       await beforeWaitTimeStep({
         id,
-        step: step as CustomWaitTimeStep,
+        step: enhancedStep as WaitTimeStep,
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.Loop) {
+    } else if(enhancedStep.type === EnhancedStepType.Loop) {
       await beforeLoopStep({
         id,
-        step: step as CustomLoopStep,
-        flow: flow as EnhancedUserFlow,
+        step: enhancedStep as LoopStep,
+        flow: enhancedFlow,
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.IfElement) {
+    } else if(enhancedStep.type === EnhancedStepType.IfElement) {
       await beforeIfElementStep({
         id,
-        step: step as CustomIfElementStep,
-        flow: flow as EnhancedUserFlow,
+        step: enhancedStep as IfElementStep,
+        flow: enhancedFlow,
         page,
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.IfExpression) {
-      await beforeIfExpressionStep({
-        id,
-        step: step as CustomIfExpressionStep,
-        flow: flow as EnhancedUserFlow,
-        page,
-      })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.Break) {
+    // } else if(enhancedStep.type === EnhancedStepType.IfExpression) {
+    //   await beforeIfExpressionStep({
+    //     id,
+    //     step: enhancedStep as IfExpressionStep,
+    //     flow: enhancedFlow,
+    //     page,
+    //   })
+    } else if(enhancedStep.type === EnhancedStepType.Break) {
       await beforeBreakStep({
         id,
-        step: step as CustomBreakStep,
-        flow: flow as EnhancedUserFlow,
+        step: enhancedStep as BreakStep,
+        flow: enhancedFlow,
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.ReturnElement) {
+    } else if(enhancedStep.type === EnhancedStepType.ReturnElement) {
       this.result = await beforeReturnElementStep({
         id,
-        step: step as CustomReturnElementStep,
+        step: enhancedStep as ReturnElementStep,
         page,
       })
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.ReturnExpression) {
-      this.result = await beforeReturnExpressionStep({
-        id,
-        step: step as CustomReturnExpressionStep,
-        flow: flow as EnhancedUserFlow,
-        page,
-      })
+    // } else if(enhancedStep.type === EnhancedStepType.ReturnExpression) {
+    //   this.result = await beforeReturnExpressionStep({
+    //     id,
+    //     step: enhancedStep as ReturnExpressionStep,
+    //     flow: enhancedFlow,
+    //     page,
+    //   })
     }
     await super.beforeEachStep?.(step, flow);
   }
 
-  async afterEachStep(step: Step, flow: UserFlow) {
+  async runStep(step: Step, flow: UserFlow) {
+    console.log(
+      this.id,
+      'runStep',
+      (step as any)?.comment ?? (step as any).key ?? '',
+      {step, flow}
+    );
+    if(Object.values(StepType).includes(step.type)) {
+      await super.runStep?.(step, flow)
+    } else {
+      // Treat any step that are not in @puppeteer/replay as customStep.
+      await super.runStep?.({type: StepType.CustomStep, name: step.type, parameters: {}}, flow)
+    }
+  }
+
+  async afterEachStep(step: any, flow: any) {
+    const enhancedStep = step as EnhancedStep
+    const enhancedFlow = flow as EnhancedUserFlow
     await super.afterEachStep?.(step, flow);
     const id = this.id;
-    const page = this.page
+    // const page = this.page
     const senderDebuggee = this.senderDebuggee
     const result = this.result
     if (step.type === StepType.Navigate) {
@@ -227,15 +292,20 @@ export class Extension extends PuppeteerRunnerExtension {
         id,
         step: step as NavigateStep,
       }) 
-    } else if(step.type === StepType.CustomStep && step.name === CustomStepName.ReturnElement) {
+    } else if(enhancedStep.type === EnhancedStepType.ReturnElement) {
       await afterReturnElementStep({
         id,
-        step: step as CustomReturnElementStep,
+        step: enhancedStep as ReturnElementStep,
         senderDebuggee,
         result,
       }) 
     }
-    console.log(id, 'afterEachStep', (step as EnhancedStep).comment, {step, flow});
+    console.log(
+      id,
+      'afterEachStep',
+      enhancedStep.comment ?? (enhancedStep as any).key ?? '',
+      {enhancedStep, enhancedFlow}
+    );
     console.groupEnd()
   }
 

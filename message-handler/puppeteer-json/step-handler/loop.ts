@@ -1,14 +1,12 @@
-import { EnhancedCustomStep, CustomStepName, EnhancedStep, EnhancedUserFlow } from '../'
+import { EnhancedStepType, EnhancedBaseStep, EnhancedStep, EnhancedUserFlow } from '../'
 
-export type CustomLoopStep = EnhancedCustomStep & {
-  name: CustomStepName.Loop,
-  parameters: {
-    count?: number,
-    steps?: EnhancedStep[],
-  }
+export type LoopStep = EnhancedBaseStep & {
+  type: EnhancedStepType.Loop,
+  count?: number,
+  steps?: EnhancedStep[],
 }
 
-export const loopParentChildrenMap = new Map<EnhancedStep, CustomLoopStep>()
+export const loopParentChildrenMap = new Map<EnhancedStep, LoopStep>()
 
 export const before = async ({
   id,
@@ -16,14 +14,14 @@ export const before = async ({
   flow,
 }: {
   id: string,
-  step: CustomLoopStep,
+  step: LoopStep,
   flow: EnhancedUserFlow,
 }) => {
-  const { steps } = step.parameters;
+  const { steps } = step;
   if(steps?.length) {
     // change remain count of current loop step
     // put steps and current loop step after current loop step
-    const count = step.parameters.count ?? -1
+    const count = step.count ?? -1
     const stepIndex = flow.steps.lastIndexOf
     (step);
     console.log(id, 'before customLoop step', {stepIndex, count, steps})
@@ -36,10 +34,10 @@ export const before = async ({
       if(count < 0) { // infinite loop
         flow.steps.splice(stepIndex + 1, 0, ...steps, step);
       } else if(count === 1) { // loop one time
-        step.parameters.count! --;
+        step.count! --;
         flow.steps.splice(stepIndex + 1, 0, ...steps, step);
       } else if(count > 1) {
-        step.parameters.count! --;
+        step.count! --;
         flow.steps.splice(stepIndex + 1, 0, ...steps, step);
       }
     }

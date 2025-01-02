@@ -23,21 +23,9 @@ console.log(
       payload: { // shibi json content
         title: 'shibi test',
         steps: [
-          {
-            type: "navigate",
-            url: "https://shi.bi"
-          },
-          {
-            type: "waitForElement",
-            selectors: ["#repo-content-pjax-container"]
-          },
-          {
-            type: "customStep",
-            name: "returnElement",
-            parameters: {
-              selectors: ["#repo-content-pjax-container"]
-            }
-          }
+          { type: "navigate", url: "https://shi.bi" },
+          { type: "waitForElement", selectors: ["#repo-content-pjax-container"] },
+          { type: "returnElement", selectors: ["#repo-content-pjax-container"] }
         ]
       }
     }
@@ -48,6 +36,7 @@ console.log(
 ![screenshot2](images/screenshot2.png)
 
 # Step Type
+shibi extended the step based on [@puppeteer/replay](https://github.com/puppeteer/replay).
 ## [Change](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.ChangeStep.md)
 ## [Click](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.ClickStep.md)
 ## [Close](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.CloseStep.md)
@@ -62,16 +51,55 @@ console.log(
 ## [WaitForElement](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.WaitForElementStep.md)
 ## [WaitForExpression](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.WaitForExpressionStep.md) (Not recommended for use)
 ## [CustomStep](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.CustomStepParams.md)
-shibi extended the CustomStep step based on [@puppeteer/replay](https://github.com/puppeteer/replay).
-### Break
-### IfElement
-### IfExpression (Not recommended for use)
-### Loop
-### MultipleClicks
-### ReturnElement
-### ReturnExpression (Not recommended for use)
-### Upload
-### WaitTime
+## Break
+## IfElement
+## Loop
+## MultipleClicks
+## ReturnElement
+## Upload
+## WaitTime
+
+# ShiBi JSON Gramma
+stack machine
+All code in a shibi json is grouped into steps, which have the following pseudocode structure.
+```json
+{
+  "comment": "describe shi.bi json gramma.",
+  "type": "flow",
+  "title": "shi.bi json gramma example",
+  "steps": [
+    {
+      "comment": "A step is an object.",
+      "type": "stepName",
+      "presetParameter1": "param1",
+      "presetParameter2": "param2",
+      "presetParameterN": "paramN",
+      "parameters": {
+        "userDefined1": 1,
+        "userDefined2": 2,
+        "userDefinedN": "N"
+      },
+      "steps": []
+    },
+    {
+      "comment": "Navigate example",
+      "type": "navigate",
+      "url": "https://shi.bi"
+    },
+    {
+      "comment": "CustomStep example",
+      "type": "ifElement",
+      "selectors": ["#id .class div"],
+      "steps": [
+        { "type": "click", "selectors": ["#id"] }
+      ],
+      "elseSteps": [
+        { "type": "click", "selectors": ["#id2"] }
+      ]
+    }
+  ]
+}
+```
 
 # Contributing
 Contributions are welcome! Please refer to the CONTRIBUTING.md file for more information.

@@ -1,25 +1,30 @@
+import {
+  StepWithSelectors,
+} from '@puppeteer/replay';
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 
 import { EMessageType } from '../../../utils/constants'
 import { validUTF16StringEncoded } from '../../puppeteer-json/utils'
 import { singletonDebugger } from '../../../utils/singleton-debugger'
 import { navigateContext } from './navigate'
-import { EnhancedCustomStep, CustomStepName } from '../'
+import { EnhancedStepType, EnhancedBaseStep } from '../'
 
-export type CustomUploadStep = EnhancedCustomStep & {
-  name: CustomStepName.Upload,
-  parameters: {
-    input: string,
-    type?: string,
-    name: string,
-  } & ({
-    file: File,
-    url?: string,
-  } | {
-    file?: File | null,
-    url: string,
-  })
-}
+export type UploadStep = EnhancedBaseStep & Omit<
+  StepWithSelectors,
+  'type' | 'selectors'
+> & {
+  type: EnhancedStepType.Upload,
+} & {
+  input: string,
+  fileType?: string,
+  fileName: string,
+} & ({
+  file: File,
+  fileUrl?: string,
+} | {
+  file?: File | null,
+  fileUrl: string,
+})
 
 const hookFetch= async ({
   id,
@@ -93,17 +98,17 @@ export const before = async ({
   senderDebuggee,
 }: {
   id: string,
-  step: CustomUploadStep,
+  step: UploadStep,
   page: Page,
   senderDebuggee: chrome.debugger.Debuggee
 }) => {
-  const {input, url, type, name} = step.parameters;
+  const {input, fileName, fileUrl, fileType } = step;
   const inputElement = await page?.$<"input">(input as any);
-  console.log(id, 'before customUpload step', {input, url, type, name, inputElement});
-  let fileUrl = url
-  if (input && url && page && inputElement) {
+  console.log(id, 'before upload step', {input, fileUrl, fileType, inputElement});
+  let resultFileUrl = fileUrl
+  if (input && fileUrl && page && inputElement) {
     const lastNavigateUrl = navigateContext.getLastestContext()?.url
-    if(url.match(/^blob:/gim) && lastNavigateUrl) { // ObjectURL
+    if(fileUrl.match(/^blob:/gim) && lastNavigateUrl) { // ObjectURL
       const proxyUrl = `${new URL(lastNavigateUrl).origin}/laorenai-proxy`
 
       // hook proxy in senderPage
@@ -141,7 +146,7 @@ export const before = async ({
         const objectURL = (await chrome.scripting.executeScript({
           target: { tabId: senderDebuggee.tabId! },
           world: 'MAIN', // world: 'ISOLATED' Not affected by the page hooking the window object, but window.addEventListener doesn't work because this window is not an opened window.
-          args: [{ id, src: proxyUrl, blobUrl: url }],
+          args: [{ id, src: proxyUrl, blobUrl: fileUrl }],
           func: ({ id, src, blobUrl}) => {
             try {
               return new Promise<{
@@ -191,11 +196,11 @@ export const before = async ({
             }
           },
         }))?.[0]?.result?.objectURL
-        fileUrl = objectURL || url
+        resultFileUrl = objectURL || fileUrl
       }
 
       // restore url in page
-      if(fileUrl) {
+      if(resultFileUrl) {
         // const ret = await chrome.debugger.sendCommand(debuggee, "Runtime.evaluate", {
         await inputElement.evaluate((upload, {name, url, type}) => {
           console.log('evaluate', {name, url, type})
@@ -214,11 +219,11 @@ export const before = async ({
           .catch(e => {
             console.error(e)
           })
-        }, {name, url: fileUrl, type});
+        }, {name: fileName, url: resultFileUrl, type: fileType});
       }
-      console.log(id, 'handleUploadStep', {fileUrl})
+      console.log(id, 'handleUploadStep', {resultFileUrl})
     } else { // file
-      await inputElement.uploadFile(url);
+      await inputElement.uploadFile(fileUrl);
     }
   }
 }

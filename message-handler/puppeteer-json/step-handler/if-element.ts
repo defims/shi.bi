@@ -4,16 +4,16 @@ import {
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 
-import { EnhancedCustomStep, CustomStepName, EnhancedStep, EnhancedUserFlow } from '../'
+import { EnhancedBaseStep, EnhancedStepType, EnhancedStep, EnhancedUserFlow } from '../'
 import { querySelectorsAll, getFrame } from '../utils'
 import { comparators } from '../constants'
 
-export type CustomIfElementStep = EnhancedCustomStep & {
-  name: CustomStepName.IfElement,
-  parameters: Omit<WaitForElementStep, 'type'> & {
-    steps?: EnhancedStep[],
-    elseSteps?: EnhancedStep[],
-  }
+export type IfElementStep = EnhancedBaseStep & Omit<
+  WaitForElementStep, 'type'
+> & {
+  type: EnhancedStepType.IfElement,
+  steps?: EnhancedStep[],
+  elseSteps?: EnhancedStep[],
 }
 export const before = async ({
   id,
@@ -22,7 +22,7 @@ export const before = async ({
   page,
 }: {
   id: string,
-  step: CustomIfElementStep,
+  step: IfElementStep,
   flow: EnhancedUserFlow,
   page: Page,
 }) => {
@@ -99,11 +99,11 @@ export const before = async ({
 
   const targetPageOrFrame = page; //TODO
   const localFrame = await getFrame(targetPageOrFrame, step);
-  const result = await ifElement(step.parameters, localFrame);
+  const result = await ifElement(step, localFrame);
   const stepIndex = flow.steps.lastIndexOf(step);
   const insertSteps = result
-    ? step.parameters.steps
-    : step.parameters.elseSteps
+    ? step.steps
+    : step.elseSteps
   console.log(id, 'before customIfElement step', {result, insertSteps})
   if(insertSteps?.length) {
     flow.steps.splice(stepIndex + 1, 0, ...insertSteps);
