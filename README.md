@@ -10,7 +10,7 @@ shi.bi (pronounced Shì'Bì) is a powerful browser automation tool that allows y
 - Highly Flexible: Beyond compatibility with Chrome DevTools Recorder instructions, it introduces new commands such as ifElement, loop, break, multipleClicks, returnElement, upload, and waitTime, greatly simplifying browser automation.
 
 # Usage
-1. Install shi.bi Chrome Extension:
+1. Install shi.bi Chrome Extension: [Shi.Bi](https://chromewebstore.google.com/detail/shibi/padmogncdghipfgnfbmidiggofeaahno)
 2. Send commands from any webpage or developer tools.
 
 # Example
