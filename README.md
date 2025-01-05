@@ -51,13 +51,104 @@ shibi extended the step based on [@puppeteer/replay](https://github.com/puppetee
 ## [WaitForElement](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.WaitForElementStep.md)
 ## [WaitForExpression](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.WaitForExpressionStep.md) (Not recommended for use)
 ## [CustomStep](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.CustomStepParams.md)
+## Flow
+```json
+{
+  "comment": "Usually the outermost step, equivalent to a module, commen, type can be omitted.",
+  "type": "flow",
+  "steps": []
+}
+```
 ## Break
+```json
+{
+  "comment": "An interrupt for the current steps, commonly used within the steps of a loop step. Type is required, others are optional.",
+  "type": "break",
+  "timeout": 1000,
+  "assertedEvents": []
+}
+```
 ## IfElement
+```json
+{
+  "comment": "Executes steps based on the selector conditions, otherwise executes elseSteps. type and selectors are required, other fields are optional.",
+  "type": "ifElement",
+  "selectors": ["#id .class tag"],
+  "operator": ">=",
+  "count": 1,
+  "visible": true,
+  "properties": {},
+  "attributes": {},
+  "steps": [],
+  "elseSteps": [],
+  "timeout": 1000,
+  "assertedEvents": []
+}
+```
 ## Loop
+```json
+{
+  "comment": "This function is designed to execute a sequence of steps multiple times. The 'type' parameter is mandatory, while others are optional. The 'count' parameter, if not specified, defaults to -1, meaning the steps will be executed indefinitely.",
+  "type": "loop",
+  "count": 2,
+  "steps": [],
+  "timeout": 1000,
+  "assertedEvents": []
+}
+```
 ## MultipleClicks
+```json
+{
+  "comment": "Similar to doubleClick and click, it allows for multiple clicks. type, offsetX, and offsetY are required, while others are optional.",
+  "type": "multipleClicks",
+  "count": 3,
+  "selectors": [],
+  "deviceType": "mouse",
+  "button": "primary",
+  "offsetX": 0,
+  "offsetY": 10,
+  "duration": 50,
+  "timeout": 1000,
+  "assertedEvents": []
+}
+```
 ## ReturnElement
+```json
+{
+  "comment": "Used to obtain the outerHTML of a certain element. type and selectors are required, others are optional.",
+  "type": "returnElement",
+  "selectors": ["#id .class tag"],
+  "operator": ">=",
+  "count": 1,
+  "visible": true,
+  "properties": {},
+  "attributes": {},
+  "timeout": 1000,
+  "assertedEvents": []
+}
+```
 ## Upload
+```json
+{
+  "comment": "Used to upload files to a destination page. Shi.Bi will automatically handle cross-origin conversion for blob URLs. The parameters \"type\", \"input\", \"fileName\", and \"fileUrl\" are mandatory; others are optional.",
+  "type": "upload",
+  "input": "#id .class input",
+  "fileType": "",
+  "fileName": "",
+  "fileUrl": "",
+  "timeout": 1000,
+  "assertedEvents": []
+}
+```
 ## WaitTime
+```json
+{
+  "comment": "Used to delaying the execution of subsequent steps. \"type\" and \"time\" are required fields, while others are optional.",
+  "type": "waitTime",
+  "time": 1000,
+  "assertedEvents": []
+}
+```
 
 # ShiBi JSON Gramma
 stack machine
@@ -65,7 +156,6 @@ All code in a shibi json is grouped into steps, which have the following pseudoc
 ```json
 {
   "comment": "describe shi.bi json gramma.",
-  "type": "flow",
   "title": "shi.bi json gramma example",
   "steps": [
     {
@@ -87,7 +177,7 @@ All code in a shibi json is grouped into steps, which have the following pseudoc
       "url": "https://shi.bi"
     },
     {
-      "comment": "CustomStep example",
+      "comment": "ifElement example",
       "type": "ifElement",
       "selectors": ["#id .class div"],
       "steps": [
