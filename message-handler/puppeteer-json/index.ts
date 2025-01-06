@@ -33,6 +33,7 @@ import { before as beforeLoopStep, LoopStep } from './step-handler/loop'
 import { before as beforeIfElementStep, IfElementStep } from './step-handler/if-element'
 import { before as beforeIfExpressionStep, IfExpressionStep } from './step-handler/if-expression'
 import { before as beforeBreakStep, BreakStep } from './step-handler/break'
+import { before as beforeInputStep, InputStep } from './step-handler/input'
 import {
   before as beforeReturnElementStep,
   after as afterReturnElementStep,
@@ -83,6 +84,7 @@ export enum EnhancedStepType {
   Break = "break",
   ReturnElement = 'returnElement',
   ReturnExpression = "returnExpression",
+  Input = "input",
 }
 
 /**
@@ -118,6 +120,7 @@ export type EnhancedStep = (
   | BreakStep
   | ReturnElementStep
   | ReturnExpressionStep
+  | InputStep
 )
 export type EnhancedUserFlow = Omit<UserFlow, 'steps'> & { steps: EnhancedStep[] }
 
@@ -260,6 +263,12 @@ export class Extension extends PuppeteerRunnerExtension {
     //     flow: enhancedFlow,
     //     page,
     //   })
+    } else if(enhancedStep.type === EnhancedStepType.Input) {
+      await beforeInputStep({
+        id,
+        step: enhancedStep as InputStep,
+        flow: enhancedFlow,
+      })
     }
     await super.beforeEachStep?.(step, flow);
   }

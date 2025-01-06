@@ -19,9 +19,9 @@ console.log(
   await chrome.runtime.sendMessage(
     await (await fetch("https://shi.bi/id")).text(), // Extension ID, handwritten or obtained via https://shi.bi/id.
     {
-      type: 0, // 0 for run shibi json
-      payload: { // shibi json content
-        title: 'shibi test',
+      type: 0, // 0 for run Shi.Bi json
+      payload: { // Shi.Bi json content
+        title: 'Shi.Bi test',
         steps: [
           { type: "navigate", url: "https://shi.bi" },
           { type: "waitForElement", selectors: ["#repo-content-pjax-container"] },
@@ -36,7 +36,7 @@ console.log(
 ![screenshot2](images/screenshot2.png)
 
 # Step Type
-shibi extended the step based on [@puppeteer/replay](https://github.com/puppeteer/replay).
+Shi.Bi extended the step based on [@puppeteer/replay](https://github.com/puppeteer/replay).
 ## [Change](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.ChangeStep.md)
 ## [Click](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.ClickStep.md)
 ## [Close](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.CloseStep.md)
@@ -149,10 +149,20 @@ shibi extended the step based on [@puppeteer/replay](https://github.com/puppetee
   "assertedEvents": []
 }
 ```
+## Input
+```json
+{
+  "comment": "The input step is syntactic sugar for a sequence of keyDown and keyUp steps. It will convert the value of the text field into a corresponding number of keyDown and keyUp steps. type and text are required fields, while others are optional.",
+  "type": "input",
+  "text": "text",
+  "time": 1000,
+  "assertedEvents": []
+}
+```
 
 # ShiBi JSON Gramma
 stack machine
-All code in a shibi json is grouped into steps, which have the following pseudocode structure.
+All code in a Shi.Bi json is grouped into steps, which have the following pseudocode structure.
 ```json
 {
   "comment": "describe shi.bi json gramma.",
