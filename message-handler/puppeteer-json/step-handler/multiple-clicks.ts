@@ -8,6 +8,7 @@ import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 
 import { EnhancedUserFlow, EnhancedStepType, EnhancedBaseStep, EnhancedStep } from '../'
+import * as waitForElementStep from './wait-for-element'
 import { getFrame } from '../utils'
 
 async function waitForEvents(pageOrFrame: Frame | Page, step: EnhancedStep, timeout: number) {
@@ -33,11 +34,38 @@ export type MultipleClicksStep = EnhancedBaseStep & Omit<
   ClickStep,
   'type'
 > & {
+  comment?: string,
   type: EnhancedStepType.MultipleClicks,
   count?: number,
+  waitForElement?: boolean,
 }
 
 export const before = async ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: MultipleClicksStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.waitForElement ? '.waitForElement' : ''
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+
+  await waitForElementStep.asAProperty({
+    id,
+    step,
+    flow
+  })
+}
+
+export const run = async ({
   id,
   step,
   page,

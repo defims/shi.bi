@@ -4,18 +4,45 @@ import {
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 
-import { EnhancedBaseStep, EnhancedStepType, EnhancedStep, EnhancedUserFlow } from '../'
+import { EnhancedBaseStep, EnhancedStepType, EnhancedStep, EnhancedUserFlow } from '../index'
 import { querySelectorsAll, getFrame } from '../utils'
 import { comparators } from '../constants'
+import * as waitForElementStep from './wait-for-element'
 
 export type IfElementStep = EnhancedBaseStep & Omit<
   WaitForElementStep, 'type'
 > & {
+  comment?: string,
   type: EnhancedStepType.IfElement,
   steps?: EnhancedStep[],
   elseSteps?: EnhancedStep[],
+  waitForElement?: boolean,
 }
 export const before = async ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: IfElementStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.waitForElement ? '.waitForElement' : ''
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+
+  await waitForElementStep.asAProperty({
+    id,
+    step,
+    flow
+  })
+}
+export const run = async ({
   id,
   step,
   flow,

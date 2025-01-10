@@ -1,21 +1,27 @@
 import {
   StepWithSelectors,
+  Selector,
 } from '@puppeteer/replay';
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
+import { ElementHandle } from 'puppeteer-core/lib/esm/puppeteer/api/ElementHandle'
 
 import { EMessageType } from '../../../utils/constants'
 import { validUTF16StringEncoded } from '../../puppeteer-json/utils'
 import { singletonDebugger } from '../../../utils/singleton-debugger'
 import { navigateContext } from './navigate'
-import { EnhancedStepType, EnhancedBaseStep } from '../'
+import * as waitForElementStep from './wait-for-element'
+import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow } from '../index'
+import { querySelectorsAll, getFrame } from '../utils'
 
 export type UploadStep = EnhancedBaseStep & Omit<
   StepWithSelectors,
   'type' | 'selectors'
 > & {
+  comment?: string,
   type: EnhancedStepType.Upload,
+  waitForElement?: boolean,
 } & {
-  input: string,
+  selectors: Selector[],
   fileType?: string,
   fileName: string,
 } & ({
@@ -94,6 +100,31 @@ const hookFetch= async ({
 export const before = async ({
   id,
   step,
+  flow,
+}: {
+  id: string,
+  step: UploadStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.waitForElement ? '.waitForElement' : ''
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+
+  await waitForElementStep.asAProperty({
+    id,
+    step,
+    flow
+  })
+}
+
+export const run = async ({
+  id,
+  step,
   page,
   senderDebuggee,
 }: {
@@ -102,11 +133,12 @@ export const before = async ({
   page: Page,
   senderDebuggee: chrome.debugger.Debuggee
 }) => {
-  const {input, fileName, fileUrl, fileType } = step;
-  const inputElement = await page?.$<"input">(input as any);
-  console.log(id, 'before upload step', {input, fileUrl, fileType, inputElement});
+  const {selectors, fileName, fileUrl, fileType } = step;
+  const localFrame = await getFrame(page, step);
+  const inputElements = (await querySelectorsAll(selectors, localFrame)) as ElementHandle<HTMLInputElement>[];
+  console.log(id, 'before upload step', {selectors, fileUrl, fileType, inputElements});
   let resultFileUrl = fileUrl
-  if (input && fileUrl && page && inputElement) {
+  if (selectors?.length && fileUrl && page && inputElements?.length) {
     const lastNavigateUrl = navigateContext.getLastestContext()?.url
     if(fileUrl.match(/^blob:/gim) && lastNavigateUrl) { // ObjectURL
       const proxyUrl = `${new URL(lastNavigateUrl).origin}/laorenai-proxy`
@@ -202,28 +234,32 @@ export const before = async ({
       // restore url in page
       if(resultFileUrl) {
         // const ret = await chrome.debugger.sendCommand(debuggee, "Runtime.evaluate", {
-        await inputElement.evaluate((upload, {name, url, type}) => {
-          console.log('evaluate', {name, url, type})
-          return fetch(url)
-          .then(res => res.blob())
-          .then(blob => {
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(new File([blob], name, {type}));
-            console.log({dataTransfer, blob});
-            upload.files = dataTransfer.files;
-            upload.dispatchEvent(
-              new Event('input', {bubbles: true, composed: true})
-            );
-            upload.dispatchEvent(new Event('change', {bubbles: true}));
-          })
-          .catch(e => {
-            console.error(e)
-          })
-        }, {name: fileName, url: resultFileUrl, type: fileType});
+        await Promise.all(inputElements.map(async (inputElement) => {
+          await inputElement.evaluate((upload, {name, url, type}) => {
+            console.log('evaluate', {name, url, type})
+            return fetch(url)
+            .then(res => res.blob())
+            .then(blob => {
+              const dataTransfer = new DataTransfer();
+              dataTransfer.items.add(new File([blob], name, {type}));
+              console.log({dataTransfer, blob});
+              upload.files = dataTransfer.files;
+              upload.dispatchEvent(
+                new Event('input', {bubbles: true, composed: true})
+              );
+              upload.dispatchEvent(new Event('change', {bubbles: true}));
+            })
+            .catch(e => {
+              console.error(e)
+            })
+          }, {name: fileName, url: resultFileUrl!, type: fileType});
+        }));
       }
       console.log(id, 'handleUploadStep', {resultFileUrl})
     } else { // file
-      await inputElement.uploadFile(fileUrl);
+      await Promise.all(inputElements.map(async (inputElement) => {
+        await inputElement.uploadFile(fileUrl);
+      }));
     }
   }
 }

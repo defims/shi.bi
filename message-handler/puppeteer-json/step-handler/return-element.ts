@@ -5,7 +5,7 @@ import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 import { Frame } from 'puppeteer-core/lib/esm/puppeteer/api/Frame'
 import { STATUS_TEXTS } from 'puppeteer-core/lib/esm/puppeteer/api/HTTPRequest.js'
 
-import { EnhancedBaseStep, EnhancedStepType } from '../'
+import { EnhancedBaseStep, EnhancedStepType, EnhancedUserFlow } from '../index'
 import { querySelectorsAll, getFrame } from '../utils'
 import { comparators } from '../constants'
 import { singletonDebugger } from '../../../utils/singleton-debugger'
@@ -15,7 +15,9 @@ export type ReturnElementStep = EnhancedBaseStep & Omit<
   WaitForElementStep,
   'type'
 > & {
+  comment?: string,
   type: EnhancedStepType.ReturnElement,
+  waitForElement?: boolean,
 }
 export type ReturnElementStepReturn = {
   elements?: string[],
@@ -66,8 +68,24 @@ const hookFetchResponse = async ({
     // chrome.debugger.detach(debuggee)
   }
 }
-
 export const before = async ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: ReturnElementStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+}
+
+export const run = async ({
   id,
   step,
   page,
@@ -75,7 +93,7 @@ export const before = async ({
   id: string,
   step: ReturnElementStep,
   page: Page,
-}): Promise<ReturnElementStepReturn> => {
+}): Promise<ReturnElementStepReturn | undefined> => {
   // refer to https://github.com/puppeteer/replay/blob/e2c85b98e497c9191eae5a2d23429588fcd5849e/src/PuppeteerRunnerExtension.ts#L356
   async function getElementsOuterHTML(
     step: ReturnElementStep,

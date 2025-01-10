@@ -2,9 +2,26 @@ import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow } from '../'
 import { loopParentChildrenMap } from './loop'
 
 export type BreakStep = EnhancedBaseStep & {
+  comment?: string,
   type: EnhancedStepType.Break
 }
 export const before = async ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: BreakStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+}
+export const run = async ({
   id,
   step,
   flow,

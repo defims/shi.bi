@@ -26,29 +26,31 @@ import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page'
 
 import { ExtensionDebuggerTransport } from './extension-debugger-transport';
 import { EMessageType } from '../../utils/constants'
-import { before as beforeUploadStep, UploadStep } from './step-handler/upload'
-import { before as beforeMultipleClicksStep, MultipleClicksStep } from './step-handler/multiple-clicks'
-import { before as beforeWaitTimeStep, WaitTimeStep } from './step-handler/wait-time'
-import { before as beforeLoopStep, LoopStep } from './step-handler/loop'
-import { before as beforeIfElementStep, IfElementStep } from './step-handler/if-element'
-import { before as beforeIfExpressionStep, IfExpressionStep } from './step-handler/if-expression'
-import { before as beforeBreakStep, BreakStep } from './step-handler/break'
-import { before as beforeInputStep, InputStep } from './step-handler/input'
-import {
-  before as beforeReturnElementStep,
-  after as afterReturnElementStep,
-  ReturnElementStep,
-  ReturnElementStepReturn
-} from './step-handler/return-element'
-import {
-  before as beforeReturnExpressionStep,
-  ReturnExpressionStep,
-  ReturnExpressionStepReturn
-} from './step-handler/return-expression'
-import {
-  after as afterNavigateStep,
-  navigateContext,
-} from './step-handler/navigate'
+
+import * as changeStep from './step-handler/change'
+import * as clickStep from './step-handler/click'
+import * as closeStep from './step-handler/close'
+import * as customStepStep from './step-handler/custom-step'
+import * as doubleClickStep from './step-handler/double-click'
+import * as emulateNetworkConditionsStep from './step-handler/emulate-network-conditions'
+import * as hoverStep from './step-handler/hover'
+import * as keyDownStep from './step-handler/key-down'
+import * as keyUpStep from './step-handler/key-up'
+import * as navigateStep from './step-handler/navigate'
+import * as scrollStep from './step-handler/scroll'
+import * as setViewportStep from './step-handler/set-viewport'
+import * as waitForElementStep from './step-handler/wait-for-element'
+import * as waitForExpressionStep from './step-handler/wait-for-expression'
+import * as uploadStep from './step-handler/upload'
+import * as multipleClicksStep from './step-handler/multiple-clicks'
+import * as waitTimeStep from './step-handler/wait-time'
+import * as loopStep from './step-handler/loop'
+import * as ifElementStep from './step-handler/if-element'
+import * as ifExpressionStep from './step-handler/if-expression'
+import * as breakStep from './step-handler/break'
+import * as returnElementStep from './step-handler/return-element'
+import * as returnExpressionStep from './step-handler/return-expression'
+import * as inputStep from './step-handler/input'
 
 export type EnhancedBaseStep = Omit<
   BaseStep,
@@ -95,32 +97,32 @@ export enum EnhancedStepType {
  */
 export type EnhancedStep = (
   | ({ comment?: string } & (
-    | Omit<ChangeStep, 'type'> & { type: EnhancedStepType.Change }
-    | Omit<ClickStep, 'type'> & { type: EnhancedStepType.Click }
-    | Omit<HoverStep, 'type'> & { type: EnhancedStepType.Hover }
-    | Omit<CloseStep, 'type'> & { type: EnhancedStepType.Close }
-    | Omit<CustomStep, 'type'> & { type: EnhancedStepType.CustomStep }
-    | Omit<DoubleClickStep, 'type'> & { type: EnhancedStepType.DoubleClick }
-    | Omit<EmulateNetworkConditionsStep, 'type'> & { type: EnhancedStepType.EmulateNetworkConditions }
-    | Omit<KeyDownStep, 'type'> & { type: EnhancedStepType.KeyDown }
-    | Omit<KeyUpStep, 'type'> & { type: EnhancedStepType.KeyUp }
-    | Omit<NavigateStep, 'type'> & { type: EnhancedStepType.Navigate }
-    | Omit<ScrollStep, 'type'> & { type: EnhancedStepType.Scroll }
-    | Omit<SetViewportStep, 'type'> & { type: EnhancedStepType.SetViewport }
-    | Omit<WaitForElementStep, 'type'> & { type: EnhancedStepType.WaitForElement }
-    | Omit<WaitForExpressionStep, 'type'> & { type: EnhancedStepType.WaitForExpression }
+    | changeStep.ChangeStep
+    | clickStep.ClickStep
+    | closeStep.CloseStep
+    | customStepStep.CustomStep
+    | doubleClickStep.DoubleClickStep
+    | emulateNetworkConditionsStep.EmulateNetworkConditionsStep
+    | hoverStep.HoverStep
+    | keyDownStep.KeyDownStep
+    | keyUpStep.KeyUpStep
+    | navigateStep.NavigateStep
+    | scrollStep.ScrollStep
+    | setViewportStep.SetViewportStep
+    | waitForElementStep.WaitForElementStep
+    | waitForExpressionStep.WaitForExpressionStep
   ))
 
-  | UploadStep
-  | MultipleClicksStep
-  | WaitTimeStep
-  | LoopStep
-  | IfElementStep
-  | IfExpressionStep
-  | BreakStep
-  | ReturnElementStep
-  | ReturnExpressionStep
-  | InputStep
+  | uploadStep.UploadStep
+  | multipleClicksStep.MultipleClicksStep
+  | waitTimeStep.WaitTimeStep
+  | loopStep.LoopStep
+  | ifElementStep.IfElementStep
+  | ifExpressionStep.IfExpressionStep
+  | breakStep.BreakStep
+  | returnElementStep.ReturnElementStep
+  | returnExpressionStep.ReturnExpressionStep
+  | inputStep.InputStep
 )
 export type EnhancedUserFlow = Omit<UserFlow, 'steps'> & { steps: EnhancedStep[] }
 
@@ -168,7 +170,7 @@ export type EnhancedUserFlow = Omit<UserFlow, 'steps'> & { steps: EnhancedStep[]
 // }
 
 export class Extension extends PuppeteerRunnerExtension {
-  result: ReturnElementStepReturn | ReturnExpressionStepReturn | null
+  result: returnElementStep.ReturnElementStepReturn | returnExpressionStep.ReturnExpressionStepReturn | null
 
   private id: string
   private senderDebuggee: chrome.debugger.Debuggee
@@ -189,100 +191,242 @@ export class Extension extends PuppeteerRunnerExtension {
   }
 
   async beforeEachStep(step: Step, flow: UserFlow) {
-    const enhancedStep = step as any as EnhancedStep
-    const enhancedFlow = flow as any as EnhancedUserFlow
-    console.group(`${
-      enhancedStep.type
-    } ${
-      (enhancedStep as any)?.name ?? ''
-    }`)
-    const id = this.id
-    const page = this.page
-    const senderDebuggee = this.senderDebuggee
-    console.log(
-      id,
-      'beforeEachStep',
-      enhancedStep.comment ?? (enhancedStep as any)?.key ?? '',
-      {enhancedStep, enhancedFlow}
-    );
-    if(enhancedStep.type === EnhancedStepType.Upload) {
-      await beforeUploadStep({
+    const enhancedStep = step as any as EnhancedStep;
+    const enhancedFlow = flow as any as EnhancedUserFlow;
+    const id = this.id;
+    // const page = this.page
+    // const senderDebuggee = this.senderDebuggee
+
+    if(enhancedStep.type === EnhancedStepType.Change) {
+      await changeStep.before({
         id,
-        step: enhancedStep as UploadStep,
-        page,
-        senderDebuggee
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.Click) {
+      await clickStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.Close) {
+      await closeStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.CustomStep) {
+      await customStepStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.DoubleClick) {
+      await doubleClickStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.EmulateNetworkConditions) {
+      await emulateNetworkConditionsStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.Hover) {
+      await hoverStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.KeyDown) {
+      await keyDownStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.KeyUp) {
+      await keyUpStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.Navigate) {
+      await navigateStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.Scroll) {
+      await scrollStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.SetViewport) {
+      await setViewportStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.WaitForElement) {
+      await waitForElementStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.WaitForExpression) {
+      await waitForExpressionStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
+      })
+    } else if(enhancedStep.type === EnhancedStepType.Upload) {
+      await uploadStep.before({
+        id,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     } else if(enhancedStep.type === EnhancedStepType.MultipleClicks) {
-      await beforeMultipleClicksStep({
+      await multipleClicksStep.before({
         id,
-        step: enhancedStep as MultipleClicksStep,
-        page,
-        flow: enhancedFlow,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     } else if(enhancedStep.type === EnhancedStepType.WaitTime) {
-      await beforeWaitTimeStep({
+      await waitTimeStep.before({
         id,
-        step: enhancedStep as WaitTimeStep,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     } else if(enhancedStep.type === EnhancedStepType.Loop) {
-      await beforeLoopStep({
+      await loopStep.before({
         id,
-        step: enhancedStep as LoopStep,
-        flow: enhancedFlow,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     } else if(enhancedStep.type === EnhancedStepType.IfElement) {
-      await beforeIfElementStep({
+      await ifElementStep.before({
         id,
-        step: enhancedStep as IfElementStep,
-        flow: enhancedFlow,
-        page,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     // } else if(enhancedStep.type === EnhancedStepType.IfExpression) {
-    //   await beforeIfExpressionStep({
+    //   await ifExpression.before({
     //     id,
-    //     step: enhancedStep as IfExpressionStep,
-    //     flow: enhancedFlow,
-    //     page,
+    //     step: enhancedStep,
+    //     flow: enhancedFlow
     //   })
     } else if(enhancedStep.type === EnhancedStepType.Break) {
-      await beforeBreakStep({
+      await breakStep.before({
         id,
-        step: enhancedStep as BreakStep,
-        flow: enhancedFlow,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     } else if(enhancedStep.type === EnhancedStepType.ReturnElement) {
-      this.result = await beforeReturnElementStep({
+      await returnElementStep.before({
         id,
-        step: enhancedStep as ReturnElementStep,
-        page,
+        step: enhancedStep,
+        flow: enhancedFlow
       })
     // } else if(enhancedStep.type === EnhancedStepType.ReturnExpression) {
-    //   this.result = await beforeReturnExpressionStep({
+    //   await returnExpressionStep.before({
     //     id,
-    //     step: enhancedStep as ReturnExpressionStep,
-    //     flow: enhancedFlow,
-    //     page,
+    //     step: enhancedStep,
+    //     flow: enhancedFlow
     //   })
     } else if(enhancedStep.type === EnhancedStepType.Input) {
-      await beforeInputStep({
+      inputStep.before({
         id,
-        step: enhancedStep as InputStep,
-        flow: enhancedFlow,
+        step: enhancedStep as inputStep.InputStep,
+        flow: enhancedFlow
       })
     }
     await super.beforeEachStep?.(step, flow);
   }
 
   async runStep(step: Step, flow: UserFlow) {
+    const enhancedStep = step as any as EnhancedStep
+    const enhancedFlow = flow as any as EnhancedUserFlow
+    const id = this.id
+    const page = this.page
+    const senderDebuggee = this.senderDebuggee
     console.log(
-      this.id,
+      id,
       'runStep',
-      (step as any)?.comment ?? (step as any).key ?? '',
       {step, flow}
     );
     if(Object.values(StepType).includes(step.type)) {
       await super.runStep?.(step, flow)
     } else {
+      if(enhancedStep.type === EnhancedStepType.Upload) {
+        await uploadStep.run({
+          id,
+          step: enhancedStep,
+          page,
+          senderDebuggee
+        })
+      } else if(enhancedStep.type === EnhancedStepType.MultipleClicks) {
+        await multipleClicksStep.run({
+          id,
+          step: enhancedStep,
+          page,
+          flow: enhancedFlow,
+        })
+      } else if(enhancedStep.type === EnhancedStepType.WaitTime) {
+        await waitTimeStep.run({
+          id,
+          step: enhancedStep,
+        })
+      } else if(enhancedStep.type === EnhancedStepType.Loop) {
+        await loopStep.run({
+          id,
+          step: enhancedStep,
+          flow: enhancedFlow,
+        })
+      } else if(enhancedStep.type === EnhancedStepType.IfElement) {
+        await ifElementStep.run({
+          id,
+          step: enhancedStep,
+          flow: enhancedFlow,
+          page,
+        })
+      // } else if(enhancedStep.type === EnhancedStepType.IfExpression) {
+      //   await runIfExpressionStep({
+      //     id,
+      //     step: enhancedStep,
+      //     flow: enhancedFlow,
+      //     page,
+      //   })
+      } else if(enhancedStep.type === EnhancedStepType.Break) {
+        await breakStep.run({
+          id,
+          step: enhancedStep,
+          flow: enhancedFlow,
+        })
+      } else if(enhancedStep.type === EnhancedStepType.ReturnElement) {
+        const result = await returnElementStep.run({
+          id,
+          step: enhancedStep,
+          page,
+        })
+        if(result) {
+          this.result = result
+        }
+      // } else if(enhancedStep.type === EnhancedStepType.ReturnExpression) {
+      //   this.result = await runReturnExpressionStep({
+      //     id,
+      //     step: enhancedStep,
+      //     flow: enhancedFlow,
+      //     page,
+      //   })
+      } else if(enhancedStep.type === EnhancedStepType.Input) {
+        await inputStep.run({
+          id,
+          step: enhancedStep,
+          flow: enhancedFlow,
+        })
+      }
       // Treat any step that are not in @puppeteer/replay as customStep.
       await super.runStep?.({type: StepType.CustomStep, name: step.type, parameters: {}}, flow)
     }
@@ -296,15 +440,15 @@ export class Extension extends PuppeteerRunnerExtension {
     // const page = this.page
     const senderDebuggee = this.senderDebuggee
     const result = this.result
-    if (step.type === StepType.Navigate) {
-      await afterNavigateStep({
+    if (enhancedStep.type === EnhancedStepType.Navigate) {
+      await navigateStep.after({
         id,
-        step: step as NavigateStep,
+        step: enhancedStep,
       }) 
     } else if(enhancedStep.type === EnhancedStepType.ReturnElement) {
-      await afterReturnElementStep({
+      await returnElementStep.after({
         id,
-        step: enhancedStep as ReturnElementStep,
+        step: enhancedStep,
         senderDebuggee,
         result,
       }) 
@@ -312,8 +456,7 @@ export class Extension extends PuppeteerRunnerExtension {
     console.log(
       id,
       'afterEachStep',
-      enhancedStep.comment ?? (enhancedStep as any).key ?? '',
-      {enhancedStep, enhancedFlow}
+      {step, flow}
     );
     console.groupEnd()
   }
@@ -339,9 +482,9 @@ export const handlePuppeteerJson = async ({
 }) => {
   const recording = request?.payload;
   if(recording) {
-    navigateContext.updateContextUrl(recording)
+    navigateStep.navigateContext.updateContextUrl(recording)
     // create first tab
-    const firstNavigatorUrl = navigateContext.getContext()[0].url
+    const firstNavigatorUrl = navigateStep.navigateContext.getContext()[0].url
     const tab = await chrome.tabs.create({ url: firstNavigatorUrl })
 
     console.log(id, {tab, sender, recording});
@@ -362,7 +505,7 @@ export const handlePuppeteerJson = async ({
       });
       const [page] = await browser.pages();
 
-      navigateContext.updateContext(0, {
+      navigateStep.navigateContext.updateContext(0, {
         url: firstNavigatorUrl,
         debuggee,
         browser,

@@ -10,6 +10,7 @@ export type ReturnExpressionStep = EnhancedBaseStep & Omit<
   WaitForExpressionStep,
   'type'
 > & {
+  comment?: string,
   type: EnhancedStepType.ReturnExpression,
 }
 export type ReturnExpressionStepReturn = {
@@ -17,6 +18,24 @@ export type ReturnExpressionStepReturn = {
   type: EnhancedStepType.ReturnExpression
 }
 export const before = async ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: ReturnExpressionStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+}
+
+
+export const run = async ({
   id,
   step,
   flow,

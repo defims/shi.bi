@@ -1,10 +1,29 @@
 import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow, EnhancedStep } from '../'
 
 export type InputStep = EnhancedBaseStep & {
+  comment?: string,
   type: EnhancedStepType.Input,
   text: string,
 }
-export const before = async ({
+export const before = ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: InputStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.text ? ` "${step?.text}"` : ''
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+}
+export const run = async ({
   id,
   step,
   flow,
