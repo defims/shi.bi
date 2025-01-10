@@ -1,16 +1,33 @@
 import {
   StepWithFrame,
 } from '@puppeteer/replay';
-import { EnhancedStepType, EnhancedBaseStep } from '../'
+import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow } from '../'
 
 export type WaitTimeStep = EnhancedBaseStep & Omit<
   StepWithFrame,
  'timeout' | 'type'
 > & {
+  comment?: string,
   type: EnhancedStepType.WaitTime,
   time: number,
 }
 export const before = async ({
+  id,
+  step,
+  flow,
+}: {
+  id: string,
+  step: WaitTimeStep,
+  flow: EnhancedUserFlow,
+}) => {
+  console.group(`${
+    step.type
+  }${
+    step?.comment ? ` "${step?.comment}"` : ''
+  }`);
+  console.log(id, 'beforeEachStep', {step, flow});
+}
+export const run = async ({
   id,
   step,
 }: {
