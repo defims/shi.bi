@@ -9,7 +9,7 @@ export type WaitTimeStep = EnhancedBaseStep & Omit<
 > & {
   comment?: string,
   type: EnhancedStepType.WaitTime,
-  time: number,
+  duration: number,
 }
 export const before = async ({
   id,
@@ -35,12 +35,12 @@ export const run = async ({
   step: WaitTimeStep,
 }) => {
   const {
-    time
+    duration
   } = step;
   await new Promise(resolve => {
     setTimeout(() => {
       resolve(true)
-    }, time)
+    }, duration)
   })
-  console.log(id, 'before waitTime step', {time});
+  console.log(id, 'before waitTime step', {duration});
 }
