@@ -12,6 +12,10 @@ export type CloseStep = Omit<
   type: EnhancedStepType.Close,
 }
 
+export const type = {
+  timeout: Number,
+}
+
 export const before = async ({
   id,
   step,

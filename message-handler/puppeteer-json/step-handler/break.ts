@@ -5,6 +5,11 @@ export type BreakStep = EnhancedBaseStep & {
   comment?: string,
   type: EnhancedStepType.Break
 }
+
+export const type = {
+  timeout: Number,
+}
+
 export const before = async ({
   id,
   step,

@@ -18,6 +18,10 @@ export type NavigateStep = Omit<
   type: EnhancedStepType.Navigate,
 }
 
+export const type = {
+  timeout: Number,
+}
+
 type Context = {
   url: string
   debuggee?: chrome.debugger.Debuggee

@@ -23,9 +23,15 @@ console.log(
       payload: { // Shi.Bi json content
         title: 'Shi.Bi test',
         steps: [
-          { type: "navigate", url: "https://shi.bi" },
-          { type: "waitForElement", selectors: ["#repo-content-pjax-container"] },
-          { type: "returnElement", selectors: ["#repo-content-pjax-container"] }
+          {
+            type: "navigate",
+            url: "https://shi.bi"
+          },
+          {
+            type: "returnElement",
+            selectors: ["#responsive-meta-container"],
+            waitForElement: true,
+          }
         ]
       }
     }
@@ -232,7 +238,8 @@ Usually the outermost step, equivalent to a module.
 {
   "comment": "",
   "type": "flow",
-  "steps": []
+  "steps": [],
+  "timeout": 1000
 }
 ```
 ## Break
@@ -351,7 +358,7 @@ The input step is syntactic sugar for a sequence of keyDown and keyUp steps. It 
   "comment": "",
   "type": "input",
   "text": "text",
-  "time": 1000,
+  "timeout": 1000,
   "assertedEvents": []
 }
 ```

@@ -14,6 +14,14 @@ export type DoubleClickStep = Omit<
   waitForElement?: boolean
 }
 
+export const type = {
+  timeout: Number,
+  waitForElement: Boolean,
+  offsetX: Number,
+  offsetY: Number,
+  duration: Number,
+}
+
 export const before = async ({
   id,
   step,

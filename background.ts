@@ -8,14 +8,14 @@ import { handlePuppeteerJson } from './message-handler/puppeteer-json'
 
 // onMessageExternal
 let onMessageExternalRequestId = 0
-chrome.runtime.onMessageExternal.addListener(
+const callback = (
   async (
     request: {
       type: EMessageType,
       payload?: UserFlow,
     },
-    sender,
-    sendResponse
+    sender: chrome.runtime.MessageSender,
+    sendResponse: (response?: any) => void
   ) => {
     const id = String(onMessageExternalRequestId ++)
     console.log(id, 'onMessageExternal', {request, sender, sendResponse});
@@ -201,4 +201,6 @@ chrome.runtime.onMessageExternal.addListener(
   }
 )
 
+chrome.runtime.onMessage.addListener(callback);
+chrome.runtime.onMessageExternal.addListener(callback);
 

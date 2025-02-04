@@ -11,7 +11,11 @@ export type WaitForElementStep = Omit<
   comment?: string,
   type: EnhancedStepType.WaitForElement,
 }
-
+export const type = {
+  timeout: Number,
+  count: Number,
+  visible: Boolean,
+}
 export const before = async ({
   id,
   step,

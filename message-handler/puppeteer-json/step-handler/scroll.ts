@@ -13,7 +13,12 @@ export type ScrollStep = Omit<
   type: EnhancedStepType.Scroll,
   waitForElement?: boolean
 }
-
+export const type = {
+  timeout: Number,
+  x: Number,
+  y: Number,
+  waitForElement: Boolean,
+}
 export const before = async ({
   id,
   step,

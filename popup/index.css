@@ -1,0 +1,64 @@
+body {
+  margin: 10px;
+}
+#header {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+#header h1 {
+  margin-left: 10px;
+}
+#textarea {
+  border: solid 1px rgb(48, 46, 57);
+  border-radius: 2px;
+  padding: 4px;
+}
+#textarea:focus {
+  border: solid 1px #e47f4f;
+  outline: none;
+}
+#droparea {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
+}
+#droparea.highlight {
+  outline: solid 1px #e47f4f;
+  border-radius: 2px;
+}
+#droparea.highlight::after {
+  content: "Drag and drop to parse";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  position: absolute;
+  color: black;
+  font-size: 18px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .8);
+}
+
+#run {
+  background: rgb(255, 165, 0);
+  border: none;
+  padding: 2px 4px;
+  border-radius: 2px;
+  cursor: pointer;
+  color: rgb(48, 46, 57);
+  line-height: 20px;
+  min-width: 60px;
+  box-shadow: 0 1px 1px #e47f4f;
+}
+#run:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 1px #e47f4f;
+}
+#run:active {
+  transform: translateY(1px);
+  box-shadow: 0 0px 1px #e47f4f;
+}

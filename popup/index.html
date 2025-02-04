@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header id="header">
+      <img width="64" height="64" src="../icons/icon128.png" />
+      <h1>Shi.Bi</h1>
+    </header>
+    <div id="droparea">
+      <textarea id="textarea" autofocus cols="50" rows="15">
+{
+  "title": "Shi.Bi test",
+  "steps": [
+    {
+      "type": "navigate",
+      "url": "https://shi.bi"
+    },
+    {
+      "type": "returnElement",
+      "selectors": ["#repo-content-pjax-container"],
+      "waitForElement": true
+    }
+  ]
+}
+      </textarea>
+    </div>
+    <button id="run">run</button>
+    <script src="index.js"></script>
+  </body>
+</html>

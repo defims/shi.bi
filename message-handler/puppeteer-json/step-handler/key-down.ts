@@ -11,7 +11,9 @@ export type KeyDownStep = Omit<
   comment?: string,
   type: EnhancedStepType.KeyDown,
 }
-
+export const type = {
+  timeout: Number,
+}
 export const before = async ({
   id,
   step,

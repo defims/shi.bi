@@ -1,0 +1,63 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:shibi="http://shi.bi"
+  shibi:type="flow"
+>
+  <title>Shi.Bi test</title>
+  <g transform="translate(10 10)">
+    <text shibi:attribute-name="shibi:type" x="0" y="0" dy="16" >navigate</text>
+    <text shibi:attribute-name="shibi:url" x="70" y="0" dy="16">https://shi.bi</text>
+    <g transform="translate(0 22)">
+      <g>
+        <rect width="640" height="320" x="0" y="0" rx="6" ry="6" fill="#e1d3c2"/>
+        <rect width="545" height="20" x="84" y="6" rx="6" ry="6" fill="#fff"/>
+        <text x="88" y="5" dy="16" fill="#8b847e">https://shi.bi</text>
+        <g transform="translate(10 0)">
+          <circle fill="#8b847e" cx="8" cy="16" r="8"/>
+          <circle fill="#8b847e" cx="32" cy="16" r="8"/>
+          <circle fill="#8b847e" cx="56" cy="16" r="8"/>
+        </g>
+      </g>
+      <foreignObject y="32" width="640" height="288">
+        <iframe
+          xmlns="http://www.w3.org/1999/xhtml"
+          src="http://shi.bi"
+          width="100%"
+          height="100%"
+          style="border: none; border-radius: 0px 0px 6px 6px;"
+        ></iframe>
+      </foreignObject>
+    </g>
+  </g>
+  <g shibi:wait-for-element="true" transform="translate(10 10)">
+    <text shibi:attribute-name="shibi:type" x="0" y="346" dy="16" >returnElement</text>
+    <g transform="translate(0 368)">
+      <g>
+        <rect width="640" height="320" x="0" y="0" rx="6" ry="6" fill="#e1d3c2"/>
+        <rect width="545" height="20" x="84" y="6" rx="6" ry="6" fill="#fff"/>
+        <text x="88" y="5" dy="16" fill="#8b847e">https://shi.bi</text>
+        <g transform="translate(10 0)">
+          <circle fill="#8b847e" cx="8" cy="16" r="8"/>
+          <circle fill="#8b847e" cx="32" cy="16" r="8"/>
+          <circle fill="#8b847e" cx="56" cy="16" r="8"/>
+        </g>
+      </g>
+      <foreignObject y="32" width="640" height="288">
+        <iframe
+          xmlns="http://www.w3.org/1999/xhtml"
+          src="http://shi.bi"
+          width="100%"
+          height="100%"
+          style="border: none; border-radius: 0px 0px 6px 6px;"
+        ></iframe>
+      </foreignObject>
+    </g>
+    <g shibi:attribute-name="shibi:selectors">
+      <text shibi:attribute-name="shibi:0" x="110" y="346" dy="16">
+        #responsive-meta-container
+      </text>
+    </g>
+    <rect x="10" y="525" rx="6" ry="6" width="580" height="55" stroke="red" stroke-width="2" fill="none" />
+  </g>
+</svg>

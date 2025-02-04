@@ -19,6 +19,12 @@ export type ReturnElementStep = EnhancedBaseStep & Omit<
   type: EnhancedStepType.ReturnElement,
   waitForElement?: boolean,
 }
+export const type = {
+  timeout: Number,
+  waitForElement: Boolean,
+  count: Number,
+  visible: Boolean,
+}
 export type ReturnElementStepReturn = {
   elements?: string[],
   styles?: string[],

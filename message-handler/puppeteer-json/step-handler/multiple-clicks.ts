@@ -40,6 +40,15 @@ export type MultipleClicksStep = EnhancedBaseStep & Omit<
   waitForElement?: boolean,
 }
 
+export const type = {
+  timeout: Number,
+  waitForElement: Boolean,
+  count: Number,
+  offsetX: Number,
+  offsetY: Number,
+  duration: Number,
+}
+
 export const before = async ({
   id,
   step,
