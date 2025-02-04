@@ -40,6 +40,8 @@ console.log(
 ```
 ![screenshot](images/screenshot.png)
 ![screenshot2](images/screenshot2.png)
+![screenshot3](images/screenshot3.png)
+![screenshot4](images/screenshot4.png)
 
 # Step Type
 Shi.Bi extended the step based on [@puppeteer/replay](https://github.com/puppeteer/replay).
