@@ -15,6 +15,9 @@ export type IfExpressionStep = EnhancedBaseStep & Omit<
   steps?: EnhancedStep[],
   elseSteps?: EnhancedStep[],
 }
+export const type = {
+  timeout: Number,
+}
 export const before = async ({
   id,
   step,

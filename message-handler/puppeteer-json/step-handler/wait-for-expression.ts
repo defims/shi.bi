@@ -11,7 +11,9 @@ export type WaitForExpressionStep = Omit<
   comment?: string,
   type: EnhancedStepType.WaitForExpression,
 }
-
+export const type = {
+  timeout: Number,
+}
 export const before = async ({
   id,
   step,

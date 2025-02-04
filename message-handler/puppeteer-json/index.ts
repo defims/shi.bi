@@ -77,6 +77,7 @@ export enum EnhancedStepType {
   WaitForExpression = StepType.WaitForExpression,
 
   // additional step type
+  Flow = "flow",
   MultipleClicks = "multipleClicks",
   Upload = "upload",
   WaitTime = 'waitTime',

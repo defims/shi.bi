@@ -31,7 +31,10 @@ export type UploadStep = EnhancedBaseStep & Omit<
   file?: File | null,
   fileUrl: string,
 })
-
+export const type = {
+  timeout: Number,
+  waitForElement: Boolean,
+}
 const hookFetch= async ({
   id,
   debuggee,

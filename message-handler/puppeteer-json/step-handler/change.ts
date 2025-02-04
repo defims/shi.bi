@@ -14,6 +14,11 @@ export type ChangeStep = Omit<
   waitForElement?: boolean
 }
 
+export const type = {
+  waitElement: Boolean,
+  timeout: Number,
+}
+
 export const before = async ({
   id,
   step,

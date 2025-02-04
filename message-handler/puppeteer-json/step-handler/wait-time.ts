@@ -11,6 +11,9 @@ export type WaitTimeStep = EnhancedBaseStep & Omit<
   type: EnhancedStepType.WaitTime,
   duration: number,
 }
+export const type = {
+  duration: Number,
+}
 export const before = async ({
   id,
   step,

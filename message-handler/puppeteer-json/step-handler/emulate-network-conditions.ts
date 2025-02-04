@@ -12,6 +12,13 @@ export type EmulateNetworkConditionsStep = Omit<
   type: EnhancedStepType.EmulateNetworkConditions,
 }
 
+export const type = {
+  timeout: Number,
+  download: Number,
+  upload: Number,
+  latency: Number,
+}
+
 export const before = async ({
   id,
   step,

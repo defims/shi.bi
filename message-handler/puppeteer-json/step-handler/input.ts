@@ -5,6 +5,9 @@ export type InputStep = EnhancedBaseStep & {
   type: EnhancedStepType.Input,
   text: string,
 }
+export const type = {
+  timeout: Number,
+}
 export const before = ({
   id,
   step,

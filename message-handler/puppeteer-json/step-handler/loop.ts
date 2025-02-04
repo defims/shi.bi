@@ -6,7 +6,10 @@ export type LoopStep = EnhancedBaseStep & {
   count?: number,
   steps?: EnhancedStep[],
 }
-
+export const type = {
+  timeout: Number,
+  count: Number,
+}
 export const loopParentChildrenMap = new Map<EnhancedStep, LoopStep>()
 
 export const before = async ({

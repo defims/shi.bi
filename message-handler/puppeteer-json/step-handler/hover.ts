@@ -14,6 +14,11 @@ export type HoverStep = Omit<
   waitForElement?: boolean
 }
 
+export const type = {
+  timeout: Number,
+  waitForElement: Boolean,
+}
+
 export const before = async ({
   id,
   step,

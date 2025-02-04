@@ -18,6 +18,12 @@ export type IfElementStep = EnhancedBaseStep & Omit<
   elseSteps?: EnhancedStep[],
   waitForElement?: boolean,
 }
+export const type = {
+  timeout: Number,
+  waitForElement: Boolean,
+  count: Number,
+  visible: Boolean,
+}
 export const before = async ({
   id,
   step,

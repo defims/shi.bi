@@ -14,6 +14,14 @@ export type ClickStep = Omit<
   waitForElement?: boolean
 }
 
+export const type = {
+  offsetX: Number,
+  offsetY: Number,
+  waitElement: Boolean,
+  duration: Number,
+  timeout: Number,
+}
+
 export const before = async ({
   id,
   step,

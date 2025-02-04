@@ -19,7 +19,11 @@ const replaceNodeBuiltIns = () => {
 }
 
 esbuild.build({
-  entryPoints: ['./background.ts'],
+  entryPoints: {
+    background: './background.ts',
+    content: './content.ts',
+    'popup/index': './popup/index.ts'
+  },
   outdir: './dist/',
   bundle: true,
   minify: true,
@@ -50,6 +54,14 @@ esbuild.build({
     copyStaticFiles({
       src: './icons',
       dest: './dist/icons',
+    }),
+    copyStaticFiles({
+      src: './popup/index.html',
+      dest: './dist/popup/index.html',
+    }),
+    copyStaticFiles({
+      src: './popup/index.css',
+      dest: './dist/popup/index.css',
     }),
   ],
 });

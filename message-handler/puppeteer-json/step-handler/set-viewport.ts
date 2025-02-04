@@ -11,7 +11,15 @@ export type SetViewportStep = Omit<
   comment?: string,
   type: EnhancedStepType.SetViewport,
 }
-
+export const type = {
+  timeout: Number,
+  width: Number,
+  height: Number,
+  deviceScaleFactor: Number,
+  isMobile: Boolean,
+  hasTouch: Boolean,
+  isLandscape: Boolean,
+}
 export const before = async ({
   id,
   step,

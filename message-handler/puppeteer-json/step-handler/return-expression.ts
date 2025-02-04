@@ -13,6 +13,9 @@ export type ReturnExpressionStep = EnhancedBaseStep & Omit<
   comment?: string,
   type: EnhancedStepType.ReturnExpression,
 }
+export const type = {
+  timeout: Number,
+}
 export type ReturnExpressionStepReturn = {
   result?: any,
   type: EnhancedStepType.ReturnExpression
