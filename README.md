@@ -11,7 +11,11 @@ shi.bi (pronounced Shì'Bì) is a powerful browser automation tool that allows y
 
 # Usage
 1. Install shi.bi Chrome Extension: [Shi.Bi](https://chromewebstore.google.com/detail/shibi/padmogncdghipfgnfbmidiggofeaahno)
-2. Send commands from any webpage or developer tools.
+2. Run shibi JSON using any of the following methods:
+  - Open shi.bi.svg, then click the shi.bi button in the upper right corner.
+  - Drag and drop shi.bi.svg into the Shi.Bi extension's popup window, and then click the Run button to run the Parsed shibi JSON.
+  - Directly enter shibi JSON in the Shi.Bi extension's popup window and click the Run button.
+  - Send commands from any webpage or developer tools.
 
 # Example
 ```javascript
