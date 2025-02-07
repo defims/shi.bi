@@ -13,12 +13,12 @@ import * as waitForElementStep from './wait-for-element'
 import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow } from '../index'
 import { querySelectorsAll, getFrame } from '../utils'
 
-export type UploadStep = EnhancedBaseStep & Omit<
+export type UploadFileStep = EnhancedBaseStep & Omit<
   StepWithSelectors,
   'type' | 'selectors'
 > & {
-  comment?: string,
-  type: EnhancedStepType.Upload,
+  title?: string,
+  type: EnhancedStepType.UploadFile,
   waitForElement?: boolean,
 } & {
   selectors: Selector[],
@@ -106,7 +106,7 @@ export const before = async ({
   flow,
 }: {
   id: string,
-  step: UploadStep,
+  step: UploadFileStep,
   flow: EnhancedUserFlow,
 }) => {
   console.group(`${
@@ -114,7 +114,7 @@ export const before = async ({
   }${
     step?.waitForElement ? '.waitForElement' : ''
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 
@@ -132,14 +132,14 @@ export const run = async ({
   senderDebuggee,
 }: {
   id: string,
-  step: UploadStep,
+  step: UploadFileStep,
   page: Page,
   senderDebuggee: chrome.debugger.Debuggee
 }) => {
   const {selectors, fileName, fileUrl, fileType } = step;
   const localFrame = await getFrame(page, step);
   const inputElements = (await querySelectorsAll(selectors, localFrame)) as ElementHandle<HTMLInputElement>[];
-  console.log(id, 'before upload step', {selectors, fileUrl, fileType, inputElements});
+  console.log(id, 'before uploadFile step', {selectors, fileUrl, fileType, inputElements});
   let resultFileUrl = fileUrl
   if (selectors?.length && fileUrl && page && inputElements?.length) {
     const lastNavigateUrl = navigateContext.getLastestContext()?.url
@@ -258,7 +258,7 @@ export const run = async ({
           }, {name: fileName, url: resultFileUrl!, type: fileType});
         }));
       }
-      console.log(id, 'handleUploadStep', {resultFileUrl})
+      console.log(id, 'handleUploadFileStep', {resultFileUrl})
     } else { // file
       await Promise.all(inputElements.map(async (inputElement) => {
         await inputElement.uploadFile(fileUrl);

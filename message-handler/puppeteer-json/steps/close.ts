@@ -1,38 +1,34 @@
 import {
-  SetViewportStep as OriginSetViewportStep
+  CloseStep as OriginCloseStep
 } from '@puppeteer/replay'
 
 import { EnhancedStepType, EnhancedUserFlow } from '../index'
 
-export type SetViewportStep = Omit<
-  OriginSetViewportStep,
+export type CloseStep = Omit<
+  OriginCloseStep,
   'type'
 > & {
-  comment?: string,
-  type: EnhancedStepType.SetViewport,
+  title?: string,
+  type: EnhancedStepType.Close,
 }
+
 export const type = {
   timeout: Number,
-  width: Number,
-  height: Number,
-  deviceScaleFactor: Number,
-  isMobile: Boolean,
-  hasTouch: Boolean,
-  isLandscape: Boolean,
 }
+
 export const before = async ({
   id,
   step,
   flow,
 }: {
   id: string,
-  step: SetViewportStep,
+  step: CloseStep,
   flow: EnhancedUserFlow,
 }) => {
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

@@ -1,7 +1,7 @@
 import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow, EnhancedStep } from '../'
 
 export type InputStep = EnhancedBaseStep & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.Input,
   text: string,
 }
@@ -22,7 +22,7 @@ export const before = ({
   }${
     step?.text ? ` "${step?.text}"` : ''
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

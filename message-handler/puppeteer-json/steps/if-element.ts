@@ -12,7 +12,7 @@ import * as waitForElementStep from './wait-for-element'
 export type IfElementStep = EnhancedBaseStep & Omit<
   WaitForElementStep, 'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.IfElement,
   steps?: EnhancedStep[],
   elseSteps?: EnhancedStep[],
@@ -38,7 +38,7 @@ export const before = async ({
   }${
     step?.waitForElement ? '.waitForElement' : ''
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 

@@ -2,7 +2,7 @@ import { EnhancedStepType, EnhancedBaseStep, EnhancedUserFlow } from '../'
 import { loopParentChildrenMap } from './loop'
 
 export type BreakStep = EnhancedBaseStep & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.Break
 }
 
@@ -22,7 +22,7 @@ export const before = async ({
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

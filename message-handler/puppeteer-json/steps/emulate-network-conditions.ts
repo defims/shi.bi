@@ -8,7 +8,7 @@ export type EmulateNetworkConditionsStep = Omit<
   OriginEmulateNetworkConditionsStep,
   'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.EmulateNetworkConditions,
 }
 
@@ -31,7 +31,7 @@ export const before = async ({
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 
