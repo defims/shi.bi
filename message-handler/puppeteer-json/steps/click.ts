@@ -1,25 +1,25 @@
 import {
-  DoubleClickStep as OriginDoubleClickStep
+  ClickStep as OriginClickStep
 } from '@puppeteer/replay'
 
 import { EnhancedStepType, EnhancedUserFlow } from '../index'
 import * as waitForElementStep from './wait-for-element'
 
-export type DoubleClickStep = Omit<
-  OriginDoubleClickStep,
+export type ClickStep = Omit<
+  OriginClickStep,
   'type'
 > & {
-  comment?: string,
-  type: EnhancedStepType.DoubleClick,
+  title?: string,
+  type: EnhancedStepType.Click,
   waitForElement?: boolean
 }
 
 export const type = {
-  timeout: Number,
-  waitForElement: Boolean,
   offsetX: Number,
   offsetY: Number,
+  waitElement: Boolean,
   duration: Number,
+  timeout: Number,
 }
 
 export const before = async ({
@@ -28,7 +28,7 @@ export const before = async ({
   flow,
 }: {
   id: string,
-  step: DoubleClickStep,
+  step: ClickStep,
   flow: EnhancedUserFlow,
 }) => {
   console.group(`${
@@ -36,7 +36,7 @@ export const before = async ({
   }${
     step?.waitForElement ? '.waitForElement' : ''
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 

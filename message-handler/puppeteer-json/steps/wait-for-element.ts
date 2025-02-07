@@ -8,7 +8,7 @@ export type WaitForElementStep = Omit<
   OriginWaitForElementStep,
   'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.WaitForElement,
 }
 export const type = {
@@ -28,7 +28,7 @@ export const before = async ({
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

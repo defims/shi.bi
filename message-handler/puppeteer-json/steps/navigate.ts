@@ -14,7 +14,7 @@ export type NavigateStep = Omit<
   OriginNavigateStep,
   'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.Navigate,
 }
 
@@ -76,7 +76,7 @@ export const before = async ({
   }${
     step?.url ? ` "${step?.url}"` : ''
   }${
-    enhancedStep?.comment ? ` "${enhancedStep?.comment}"` : ''
+    enhancedStep?.title ? ` "${enhancedStep?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

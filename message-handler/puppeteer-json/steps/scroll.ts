@@ -1,31 +1,31 @@
 import {
-  ChangeStep as OriginChangeStep
+  ScrollStep as OriginScrollStep
 } from '@puppeteer/replay'
 
 import { EnhancedStepType, EnhancedUserFlow } from '../index'
 import { asAProperty as asAWaitForElementProperty } from './wait-for-element'
 
-export type ChangeStep = Omit<
-  OriginChangeStep,
+export type ScrollStep = Omit<
+  OriginScrollStep,
   'type'
 > & {
-  comment?: string,
-  type: EnhancedStepType.Change,
+  title?: string,
+  type: EnhancedStepType.Scroll,
   waitForElement?: boolean
 }
-
 export const type = {
-  waitElement: Boolean,
   timeout: Number,
+  x: Number,
+  y: Number,
+  waitForElement: Boolean,
 }
-
 export const before = async ({
   id,
   step,
   flow,
 }: {
   id: string,
-  step: ChangeStep,
+  step: ScrollStep,
   flow: EnhancedUserFlow,
 }) => {
   console.group(`${
@@ -33,7 +33,7 @@ export const before = async ({
   }${
     step?.waitForElement ? '.waitForElement' : ''
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 

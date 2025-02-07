@@ -34,7 +34,7 @@ export type MultipleClicksStep = EnhancedBaseStep & Omit<
   ClickStep,
   'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.MultipleClicks,
   count?: number,
   waitForElement?: boolean,
@@ -63,7 +63,7 @@ export const before = async ({
   }${
     step?.waitForElement ? '.waitForElement' : ''
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 

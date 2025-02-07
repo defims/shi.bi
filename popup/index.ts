@@ -64,6 +64,19 @@ if(droparea) {
           textarea.value = JSON.stringify(flow, null, 2);
         }
         console.log({text, flow});
+      } else if(file && file.type === 'application/json') {
+        const text = await file.text();
+        let flow = {};
+        try {
+          flow = JSON.parse(text);
+        } catch(e) {
+          console.error(e);
+        }
+        const textarea = document.getElementById('textarea') as HTMLTextAreaElement;
+        if(textarea) {
+          textarea.value = JSON.stringify(flow, null, 2);
+        }
+        console.log({text, flow});
       }
     }
   });

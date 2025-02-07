@@ -8,7 +8,7 @@ export type KeyUpStep = Omit<
   OriginKeyUpStep,
   'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.KeyUp,
 }
 export const type = {
@@ -29,7 +29,7 @@ export const before = async ({
   }${
     step?.key ? ` "${step?.key}"` : ''
   }${
-    enhancedStep?.comment ? ` "${enhancedStep?.comment}"` : ''
+    enhancedStep?.title ? ` "${enhancedStep?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

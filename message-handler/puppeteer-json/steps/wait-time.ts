@@ -7,7 +7,7 @@ export type WaitTimeStep = EnhancedBaseStep & Omit<
   StepWithFrame,
  'timeout' | 'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.WaitTime,
   duration: number,
 }
@@ -26,7 +26,7 @@ export const before = async ({
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

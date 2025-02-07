@@ -1,0 +1,14 @@
+{
+  "title": "Shi.Bi test",
+  "steps": [
+    {
+      "type": "navigate",
+      "url": "https://shi.bi"
+    },
+    {
+      "type": "returnElement",
+      "selectors": ["#responsive-meta-container"],
+      "waitForElement": true
+    }
+  ]
+}

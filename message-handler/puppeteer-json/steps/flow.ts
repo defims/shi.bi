@@ -8,7 +8,7 @@ export type FlowStep = Omit<
 OriginFlowStep,
   'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.Flow,
 }
 

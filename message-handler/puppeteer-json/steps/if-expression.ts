@@ -10,7 +10,7 @@ export type IfExpressionStep = EnhancedBaseStep & Omit<
   WaitForExpressionStep,
  'type'
 > & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.IfExpression,
   steps?: EnhancedStep[],
   elseSteps?: EnhancedStep[],
@@ -30,7 +30,7 @@ export const before = async ({
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

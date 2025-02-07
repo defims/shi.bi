@@ -1,7 +1,7 @@
 import { EnhancedStepType, EnhancedBaseStep, EnhancedStep, EnhancedUserFlow } from '../'
 
 export type LoopStep = EnhancedBaseStep & {
-  comment?: string,
+  title?: string,
   type: EnhancedStepType.Loop,
   count?: number,
   steps?: EnhancedStep[],
@@ -24,7 +24,7 @@ export const before = async ({
   console.group(`${
     step.type
   }${
-    step?.comment ? ` "${step?.comment}"` : ''
+    step?.title ? ` "${step?.title}"` : ''
   }`);
   console.log(id, 'beforeEachStep', {step, flow});
 }

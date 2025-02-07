@@ -1,4 +1,4 @@
-import * as steps from '../puppeteer-json/step-handler';
+import * as steps from '../puppeteer-json/steps';
 
 export const parseShiBiSvgToPuppeteerJson = (text: string) => {
   const doc = new DOMParser().parseFromString(text, 'text/xml');
@@ -111,9 +111,9 @@ export const parseShiBiSvgToPuppeteerJson = (text: string) => {
             }
           }
         } else if(child?.tagName === 'title') {
-          // <title>comment</title>
+          // <title>title</title>
           return {
-            key: 'comment',
+            key: 'title',
             value: child.textContent
           };
         } else if(child?.tagName === 'desc') {

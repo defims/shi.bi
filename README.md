@@ -11,7 +11,11 @@ shi.bi (pronounced Shì'Bì) is a powerful browser automation tool that allows y
 
 # Usage
 1. Install shi.bi Chrome Extension: [Shi.Bi](https://chromewebstore.google.com/detail/shibi/padmogncdghipfgnfbmidiggofeaahno)
-2. Send commands from any webpage or developer tools.
+2. Run shibi JSON using any of the following methods:
+  - Open shi.bi.svg, then click the shi.bi button in the upper right corner.
+  - Drag and drop shi.bi.svg into the Shi.Bi extension's popup window, and then click the Run button to run the Parsed shibi JSON.
+  - Directly enter shibi JSON in the Shi.Bi extension's popup window and click the Run button.
+  - Send commands from any webpage or developer tools.
 
 # Example
 ```javascript
@@ -50,7 +54,7 @@ Changes out the input identified by the locator using the provided value. The ty
 "type", "selectors" and "value" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "change",
   "waitForElement": false,
   "selectors": [],
@@ -64,7 +68,7 @@ Clicks the located element.
 "type", "selectors", "offsetX" and "offsetY" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "click",
   "waitForElement": false,
   "selectors": [],
@@ -82,7 +86,7 @@ Close the page.
 "type" is required field, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "close",
   "timeout": 1000,
   "assertedEvents": []
@@ -93,7 +97,7 @@ Double clicks the located element.
 "type", "selectors", "offsetX" and "offsetY" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "doubleClick",
   "waitForElement": false,
   "selectors": [],
@@ -112,7 +116,7 @@ A list of predefined network conditions can be used by importing [PredefinedNetw
 "type", "download", "upload" and "latency" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "emulateNetworkConditions",
   "download": 0,
   "upload": 0,
@@ -126,7 +130,7 @@ Hovers over the located element.
 "type", and "selectors" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "hover",
   "waitForElement": false,
   "selectors": [],
@@ -139,7 +143,7 @@ Dispatches a keydown event.
 "type", and "key" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "keyDown",
   "key": "",
   "timeout": 1000,
@@ -151,7 +155,7 @@ Dispatches a keyup event.
 "type", and "key" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "keyUp",
   "key": "",
   "timeout": 1000,
@@ -163,7 +167,7 @@ Navigates the frame or page to the given url.
 "type", and "url" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "navigate",
   "url": "",
   "timeout": 1000,
@@ -175,7 +179,7 @@ Scrolls the located element or page.
 "type" is required field, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "scroll",
   "waitForElement": false,
   "selectors": [],
@@ -191,7 +195,7 @@ In the case of multiple pages in a single browser, each page can have its own vi
 "type", "width", "height", "deviceScaleFactor", "isMobile", "hasTouch" and "isLandscape" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "setViewport",
   "width": 0,
   "height": 0,
@@ -208,7 +212,7 @@ Wait for the selector to appear in page. If at the moment of calling the method 
 "type", and "selectors" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "waitForElement",
   "selectors": [],
   "operator": "==",
@@ -225,7 +229,7 @@ Waits for the provided expression, to return a truthy value when evaluated in th
 "type", and "expression" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "waitForExpression",
   "expression": "",
   "timeout": 1000,
@@ -235,10 +239,21 @@ Waits for the provided expression, to return a truthy value when evaluated in th
 ## [CustomStep](https://github.com/puppeteer/replay/blob/main/docs/api/interfaces/Schema.CustomStepParams.md)
 Usually the outermost step, equivalent to a module.
 "type" and "name" are required fields, while others are optional.
-## Flow
 ```json
 {
-  "comment": "",
+  "title": "",
+  "type": "customStep",
+  "name": "",
+  "parameters": {},
+  "timeout": 1000
+}
+```
+## Flow
+shibi JSON module.
+"steps" is required fields, while others are optional.
+```json
+{
+  "title": "",
   "type": "flow",
   "steps": [],
   "timeout": 1000
@@ -249,7 +264,7 @@ An interrupt for the current steps, commonly used within the steps of a loop ste
 "type" is required field, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "break",
   "timeout": 1000,
   "assertedEvents": []
@@ -260,7 +275,7 @@ Executes steps based on the selector conditions, otherwise executes elseSteps.
 "type" and "selectors" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "ifElement",
   "waitForElement": false,
   "selectors": ["#id .class tag"],
@@ -280,7 +295,7 @@ This function is designed to execute a sequence of steps multiple times. The 'ty
 "type" and "selectors" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "loop",
   "count": -1,
   "steps": [],
@@ -293,7 +308,7 @@ Similar to doubleClick and click, it allows for multiple clicks.
 "type", "selectors", "offsetX" and "offsetY" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "multipleClicks",
   "waitForElement": false,
   "selectors": [],
@@ -312,7 +327,7 @@ Used to obtain the outerHTML of a certain element.
 "type" and "selectors" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "returnElement",
   "waitForElement": false,
   "selectors": [],
@@ -330,7 +345,7 @@ Used to upload files to a destination page. Shi.Bi will automatically handle cro
 "type", "selectors", "fileName", and "fileUrl" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "upload",
   "waitForElement": false,
   "selectors": [],
@@ -346,7 +361,7 @@ Used to delaying the execution of subsequent steps.
 "type" and "duration" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "waitTime",
   "duration": 0,
   "assertedEvents": []
@@ -357,7 +372,7 @@ The input step is syntactic sugar for a sequence of keyDown and keyUp steps. It 
 "type" and "text" are required fields, while others are optional.
 ```json
 {
-  "comment": "",
+  "title": "",
   "type": "input",
   "text": "text",
   "timeout": 1000,
@@ -370,11 +385,10 @@ stack machine
 All code in a Shi.Bi json is grouped into steps, which have the following pseudocode structure.
 ```json
 {
-  "comment": "describe shi.bi json gramma.",
-  "title": "shi.bi json gramma example",
+  "title": "describe shi.bi json gramma.",
   "steps": [
     {
-      "comment": "A step is an object.",
+      "title": "A step is an object.",
       "type": "stepName",
       "presetParameter1": "param1",
       "presetParameter2": "param2",
@@ -387,12 +401,12 @@ All code in a Shi.Bi json is grouped into steps, which have the following pseudo
       "steps": []
     },
     {
-      "comment": "Navigate example",
+      "title": "Navigate example",
       "type": "navigate",
       "url": "https://shi.bi"
     },
     {
-      "comment": "ifElement example",
+      "title": "ifElement example",
       "type": "ifElement",
       "selectors": ["#id .class div"],
       "steps": [
