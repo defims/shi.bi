@@ -1,0 +1,245 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="547" height="800" preserveAspectRatio="none" style="width:547px;height:800px">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      :root {
+        background: #1f1f1f;
+      }
+      text {
+        fill: #ccc;
+      }
+      *[fill="#181818"] {
+        fill: #ccc;
+      }
+      *[stroke="#181818"] {
+        stroke: #ccc;
+      }
+      *[fill="#f1f1f1"], *[fill="#F1F1F1"] {
+        fill: #2b2b2b;
+      }
+      *[stroke="#f1f1f1"], *[stroke="#F1F1F1"] {
+        stroke: #2b2b2b;
+      }
+    }
+  </style>
+  <text x="10" y="23.535" font-family="sans-serif" font-size="14" font-weight="bold" textLength="73">ShiBiJSON</text>
+  <rect width="69" height="26.488" x="40" y="36.488" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="45" y="55.023" font-family="sans-serif" font-size="14" textLength="59">flowStep</text>
+  <circle cx="14" cy="49.732" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="139" cy="49.732" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 49.732h22M109 49.732h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M120 49.732v-3l6 3-6 3v-3"/>
+  <text x="10" y="91.512" font-family="sans-serif" font-size="14" font-weight="bold" textLength="63">flowStep</text>
+  <path stroke="#181818" stroke-width="1.5" d="M40 145.709"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M40 132.465h15v26.488H40z"/>
+  <text x="45" y="151" font-family="sans-serif" font-size="14" textLength="5">{</text>
+  <path stroke="#181818" stroke-width="1.5" d="M55 145.709h20"/>
+  <rect width="101" height="26.488" x="75" y="132.465" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="80" y="151" font-family="sans-serif" font-size="14" textLength="91">flowKeyValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M176 145.709h20"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M204 137.709c0 6-2 8-8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M204 117.465v20.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M204 117.465c0-6 2-8 8-8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M212 109.465h163"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M275.2 109.465v-3l6 3-6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M383 137.709c0 6 2 8 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M383 117.465v20.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M375 109.465c6 0 8 2 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M196 145.709h15M376 145.709h15"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M219 137.709c0 6 2 8 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M219 133.465v4.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M219 133.465c0-6 2-8 8-8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M226 125.465h135"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M305 125.465v-3l-6 3 6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M368 137.709c0 6-2 8-8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M368 133.465v4.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M360 125.465c6 0 8 2 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M211 145.709h15M361 145.709h15M226 145.709"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M226 132.465h14v26.488h-14z"/>
+  <text x="231" y="151" font-family="sans-serif" font-size="14" textLength="4">,</text>
+  <path stroke="#181818" stroke-width="1.5" d="M240 145.709h20"/>
+  <rect width="101" height="26.488" x="260" y="132.465" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="265" y="151" font-family="sans-serif" font-size="14" textLength="91">flowKeyValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M391 145.709h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M411 132.465h15v26.488h-15z"/>
+  <text x="416" y="151" font-family="sans-serif" font-size="14" textLength="5">}</text>
+  <circle cx="14" cy="145.709" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="456" cy="145.709" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 145.709h22M426 145.709h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M437 145.709v-3l6 3-6 3v-3"/>
+  <text x="10" y="187.488" font-family="sans-serif" font-size="14" font-weight="bold" textLength="98">flowKeyValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M64 213.685"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M64 200.441h49v26.488H64z"/>
+  <text x="69" y="218.977" font-family="sans-serif" font-size="14" textLength="39">&quot;type&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M113 213.685h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M133 200.441h14v26.488h-14z"/>
+  <text x="138" y="218.977" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M147 213.685h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M167 200.441h49v26.488h-49z"/>
+  <text x="172" y="218.977" font-family="sans-serif" font-size="14" textLength="39">&quot;flow&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M40 213.685h24M216 213.685h63M64 250.174"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M64 236.93h46v26.488H64z"/>
+  <text x="69" y="255.465" font-family="sans-serif" font-size="14" textLength="36">&quot;title&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M110 250.174h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M130 236.93h14v26.488h-14z"/>
+  <text x="135" y="255.465" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M144 250.174h20"/>
+  <rect width="50" height="26.488" x="164" y="236.93" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="169" y="255.465" font-family="sans-serif" font-size="14" textLength="40">string</text>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M52 238.174c0 9 3 12 12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M214 250.174h41"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M232.5 250.174v-3l6 3-6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M267 238.174c0 9-3 12-12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M64 286.662"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M64 273.418h56v26.488H64z"/>
+  <text x="69" y="291.953" font-family="sans-serif" font-size="14" textLength="46">&quot;steps&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M120 286.662h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M140 273.418h14v26.488h-14z"/>
+  <text x="145" y="291.953" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M154 286.662h20"/>
+  <rect width="46" height="26.488" x="174" y="273.418" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="179" y="291.953" font-family="sans-serif" font-size="14" textLength="36">steps</text>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M52 274.662c0 9 3 12 12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M220 286.662h35"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M235.5 286.662v-3l6 3-6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M267 274.662c0 9-3 12-12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M64 323.15"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M64 309.906h73v26.488H64z"/>
+  <text x="69" y="328.441" font-family="sans-serif" font-size="14" textLength="63">&quot;timeout&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M137 323.15h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M157 309.906h14v26.488h-14z"/>
+  <text x="162" y="328.441" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M171 323.15h20"/>
+  <rect width="64" height="26.488" x="191" y="309.906" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="196" y="328.441" font-family="sans-serif" font-size="14" textLength="54">number</text>
+  <path stroke="#181818" stroke-width="1.5" d="M255 323.15"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M52 311.15c0 9 3 12 12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M52 225.685v85.465"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M40 213.685c9 0 12 3 12 12M267 311.15c0 9-3 12-12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M267 225.685v85.465"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M267 225.685c0-9 3-12 12-12"/>
+  <circle cx="14" cy="213.685" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="309" cy="213.685" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 213.685h22M279 213.685h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M290 213.685v-3l6 3-6 3v-3"/>
+  <text x="10" y="364.93" font-family="sans-serif" font-size="14" font-weight="bold" textLength="39">steps</text>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M48 411.127c0 6-2 8-8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M48 390.883v20.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M48 390.883c0-6 2-8 8-8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M56 382.883h67"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M80.8 382.883v-3l6 3-6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M131 411.127c0 6 2 8 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M131 390.883v20.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M123 382.883c6 0 8 2 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M40 419.127h15M124 419.127h15"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M63 411.127c0 6 2 8 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M63 406.883v4.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M63 406.883c0-6 2-8 8-8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M70 398.883h39"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M91.4 398.883v-3l-6 3 6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M116 411.127c0 6-2 8-8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M116 406.883v4.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M108 398.883c6 0 8 2 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M55 419.127h15M109 419.127h15"/>
+  <rect width="39" height="26.488" x="70" y="405.883" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="75" y="424.418" font-family="sans-serif" font-size="14" textLength="29">step</text>
+  <circle cx="14" cy="419.127" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="169" cy="419.127" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 419.127h22M139 419.127h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M150 419.127v-3l6 3-6 3v-3"/>
+  <text x="10" y="460.906" font-family="sans-serif" font-size="14" font-weight="bold" textLength="31">step</text>
+  <rect width="69" height="26.488" x="64" y="473.859" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="69" y="492.394" font-family="sans-serif" font-size="14" textLength="59">flowStep</text>
+  <path stroke="#181818" stroke-width="1.5" d="M40 487.103h24M133 487.103h32"/>
+  <rect width="77" height="26.488" x="64" y="510.348" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="69" y="528.883" font-family="sans-serif" font-size="14" textLength="67">otherStep</text>
+  <path stroke="#181818" stroke-width="1.5" d="M141 523.592"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M52 511.592c0 9 3 12 12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M52 499.103v12.489"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M40 487.103c9 0 12 3 12 12M153 511.592c0 9-3 12-12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M153 499.103v12.489"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M153 499.103c0-9 3-12 12-12"/>
+  <circle cx="14" cy="487.103" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="195" cy="487.103" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 487.103h22M165 487.103h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M176 487.103v-3l6 3-6 3v-3"/>
+  <text x="10" y="565.371" font-family="sans-serif" font-size="14" font-weight="bold" textLength="69">otherStep</text>
+  <path stroke="#181818" stroke-width="1.5" d="M40 619.568"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M40 606.324h15v26.488H40z"/>
+  <text x="45" y="624.859" font-family="sans-serif" font-size="14" textLength="5">{</text>
+  <path stroke="#181818" stroke-width="1.5" d="M55 619.568h20"/>
+  <rect width="139" height="26.488" x="75" y="606.324" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="80" y="624.859" font-family="sans-serif" font-size="14" textLength="129">otherStepKeyValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M214 619.568h20"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M242 611.568c0 6-2 8-8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M242 591.324v20.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M242 591.324c0-6 2-8 8-8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M250 583.324h201"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M328.4 583.324v-3l6 3-6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M459 611.568c0 6 2 8 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M459 591.324v20.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M451 583.324c6 0 8 2 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M234 619.568h15M452 619.568h15"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M257 611.568c0 6 2 8 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M257 607.324v4.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M257 607.324c0-6 2-8 8-8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M264 599.324h173"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M365.8 599.324v-3l-6 3 6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M444 611.568c0 6-2 8-8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M444 607.324v4.244"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M436 599.324c6 0 8 2 8 8"/>
+  <path stroke="#181818" stroke-width="1.5" d="M249 619.568h15M437 619.568h15M264 619.568"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M264 606.324h14v26.488h-14z"/>
+  <text x="269" y="624.859" font-family="sans-serif" font-size="14" textLength="4">,</text>
+  <path stroke="#181818" stroke-width="1.5" d="M278 619.568h20"/>
+  <rect width="139" height="26.488" x="298" y="606.324" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="303" y="624.859" font-family="sans-serif" font-size="14" textLength="129">otherStepKeyValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M467 619.568h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M487 606.324h15v26.488h-15z"/>
+  <text x="492" y="624.859" font-family="sans-serif" font-size="14" textLength="5">}</text>
+  <circle cx="14" cy="619.568" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="532" cy="619.568" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 619.568h22M502 619.568h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M513 619.568v-3l6 3-6 3v-3"/>
+  <text x="10" y="661.348" font-family="sans-serif" font-size="14" font-weight="bold" textLength="135">otherStepKeyValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M64 687.545"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M64 674.301h49v26.488H64z"/>
+  <text x="69" y="692.836" font-family="sans-serif" font-size="14" textLength="39">&quot;type&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M113 687.545h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M133 674.301h14v26.488h-14z"/>
+  <text x="138" y="692.836" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M147 687.545h20"/>
+  <rect width="72" height="26.488" x="167" y="674.301" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="172" y="692.836" font-family="sans-serif" font-size="14" textLength="62">stepType</text>
+  <path stroke="#181818" stroke-width="1.5" d="M40 687.545h24M239 687.545h187M64 724.033"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M64 710.789h46v26.488H64z"/>
+  <text x="69" y="729.324" font-family="sans-serif" font-size="14" textLength="36">&quot;title&quot;</text>
+  <path stroke="#181818" stroke-width="1.5" d="M110 724.033h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M130 710.789h14v26.488h-14z"/>
+  <text x="135" y="729.324" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M144 724.033h20"/>
+  <rect width="50" height="26.488" x="164" y="710.789" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="169" y="729.324" font-family="sans-serif" font-size="14" textLength="40">string</text>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M52 712.033c0 9 3 12 12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M214 724.033h188"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M306 724.033v-3l6 3-6 3v-3"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M414 712.033c0 9-3 12-12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M64 760.521"/>
+  <rect width="123" height="26.488" x="64" y="747.277" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="69" y="765.813" font-family="sans-serif" font-size="14" textLength="113">presetParameter</text>
+  <path stroke="#181818" stroke-width="1.5" d="M187 760.521h20"/>
+  <path fill="none" stroke="#181818" stroke-width=".5" d="M207 747.277h14v26.488h-14z"/>
+  <text x="212" y="765.813" font-family="sans-serif" font-size="14" textLength="4">:</text>
+  <path stroke="#181818" stroke-width="1.5" d="M221 760.521h20"/>
+  <rect width="161" height="26.488" x="241" y="747.277" fill="#F1F1F1" stroke="#181818" stroke-width="1.5" rx="5" ry="5"/>
+  <text x="246" y="765.813" font-family="sans-serif" font-size="14" textLength="151">presetParameterValue</text>
+  <path stroke="#181818" stroke-width="1.5" d="M402 760.521"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M52 748.521c0 9 3 12 12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M52 699.545v48.976"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M40 687.545c9 0 12 3 12 12M414 748.521c0 9-3 12-12 12"/>
+  <path stroke="#181818" stroke-width="1.5" d="M414 699.545v48.976"/>
+  <path fill="none" stroke="#181818" stroke-width="1.5" d="M414 699.545c0-9 3-12 12-12"/>
+  <circle cx="14" cy="687.545" r="4" fill="none" stroke="#181818" stroke-width="2"/>
+  <circle cx="456" cy="687.545" r="4" fill="#181818" stroke="#181818"/>
+  <path stroke="#181818" stroke-width="1.5" d="M18 687.545h22M426 687.545h26"/>
+  <path fill="#181818" stroke="#181818" stroke-width="1.5" d="M437 687.545v-3l6 3-6 3v-3"/>
+</svg>

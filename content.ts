@@ -12,7 +12,7 @@ const handleClick = (value: string) => async () => {
   } 
 }
 
-if(document.documentElement.tagName === 'svg') {
+if(document.documentElement.tagName === 'svg') { // file:///path/to/xxx.shi.bi.svg
   const value = document.documentElement.outerHTML ?? '';
   const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
   rect.setAttribute('transform', 'translate(-54 0)');
@@ -42,7 +42,7 @@ if(document.documentElement.tagName === 'svg') {
   text.setAttribute('fill', '#302e39');
   text.style.pointerEvents = "none";
   document.documentElement.appendChild(text);
-} else {
+} else { // https://domain.xxx/path/with/inline/shi.bi.svg/
   const shibiSvgList = document.querySelectorAll('svg[xmlns\\:shibi="http://shi.bi"]');
   [].forEach.call(shibiSvgList, (shibiSvg: HTMLElement, index) => {
     const anchorName = `--shibi-flow-${index}`;
