@@ -12,8 +12,8 @@ shi.bi (pronounced Shì'Bì) is a powerful browser automation tool that allows y
 # Usage
 1. Install shi.bi Chrome Extension: [Shi.Bi](https://chromewebstore.google.com/detail/shibi/padmogncdghipfgnfbmidiggofeaahno)
 2. Run shibi JSON using any of the following methods:
-  - Open shi.bi.svg, then click the shi.bi button in the upper right corner.
-  - Drag and drop shi.bi.svg into the Shi.Bi extension's popup window, and then click the Run button to run the Parsed shibi JSON.
+  - Open shi.bi.json or shi.bi.svg, then click the shi.bi button in the upper right corner.
+  - Drag and drop shi.bi.json or shi.bi.svg into the Shi.Bi extension's popup window, and then click the Run button to run the Parsed shibi JSON.
   - Directly enter shibi JSON in the Shi.Bi extension's popup window and click the Run button.
   - Send commands from any webpage or developer tools.
 
@@ -340,13 +340,13 @@ Used to obtain the outerHTML of a certain element.
   "assertedEvents": []
 }
 ```
-## Upload
+## UploadFile
 Used to upload files to a destination page. Shi.Bi will automatically handle cross-origin conversion for blob URLs.
 "type", "selectors", "fileName", and "fileUrl" are required fields, while others are optional.
 ```json
 {
   "title": "",
-  "type": "upload",
+  "type": "uploadFile",
   "waitForElement": false,
   "selectors": [],
   "fileType": "",
@@ -381,44 +381,26 @@ The input step is syntactic sugar for a sequence of keyDown and keyUp steps. It 
 ```
 
 # ShiBi JSON Gramma
-stack machine
 All code in a Shi.Bi json is grouped into steps, which have the following pseudocode structure.
-```json
-{
-  "title": "describe shi.bi json gramma.",
-  "steps": [
-    {
-      "title": "A step is an object.",
-      "type": "stepName",
-      "presetParameter1": "param1",
-      "presetParameter2": "param2",
-      "presetParameterN": "paramN",
-      "parameters": {
-        "userDefined1": 1,
-        "userDefined2": 2,
-        "userDefinedN": "N"
-      },
-      "steps": []
-    },
-    {
-      "title": "Navigate example",
-      "type": "navigate",
-      "url": "https://shi.bi"
-    },
-    {
-      "title": "ifElement example",
-      "type": "ifElement",
-      "selectors": ["#id .class div"],
-      "steps": [
-        { "type": "click", "selectors": ["#id"] }
-      ],
-      "elseSteps": [
-        { "type": "click", "selectors": ["#id2"] }
-      ]
-    }
-  ]
-}
+```plantuml
+@startebnf
+ShiBiJSON = flow;
+flowStep = '{', flowKeyValue, {',', flowKeyValue}, '}';
+flowKeyValue = '"type"', ':', '"flow"'
+  | '"title"', ':', string
+  | '"steps"', ':', steps
+  | '"timeout"', ':', number;
+steps = {step};
+step = flowStep
+  | otherStep;
+otherStep = '{', otherStepKeyValue, {',', otherStepKeyValue}, '}';
+otherStepKeyValue = '"type"', ':', stepType
+  | '"title"', ':', string
+  | (presetParameter, ':', presetParameterValue);
+@endebnf
 ```
+# Break Change
+- In version 1.0.2, the comment field from version 1.0.1 has been changed to the title field. Additionally, the upload step in version 1.0.1 has been renamed to the uploadFile step in version 1.0.2.
 
 # Contributing
 Contributions are welcome! Please refer to the CONTRIBUTING.md file for more information.
