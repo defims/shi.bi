@@ -385,7 +385,7 @@ All code in a Shi.Bi json is grouped into steps, which have the following pseudo
 <!--
 ```plantuml
 @startebnf
-ShiBiJSON = flow;
+ShiBiJSON = flowStep;
 flowStep = '{', flowKeyValue, {',', flowKeyValue}, '}';
 flowKeyValue = '"type"', ':', '"flow"'
   | '"title"', ':', string
