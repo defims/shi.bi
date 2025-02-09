@@ -382,6 +382,7 @@ The input step is syntactic sugar for a sequence of keyDown and keyUp steps. It 
 
 # ShiBi JSON Gramma
 All code in a Shi.Bi json is grouped into steps, which have the following pseudocode structure.
+<!--
 ```plantuml
 @startebnf
 ShiBiJSON = flow;
@@ -399,6 +400,8 @@ otherStepKeyValue = '"type"', ':', stepType
   | (presetParameter, ':', presetParameterValue);
 @endebnf
 ```
+-->
+![shibiJSON](images/shibiJSON.svg)
 # Break Change
 - In version 1.0.2, the comment field from version 1.0.1 has been changed to the title field. Additionally, the upload step in version 1.0.1 has been renamed to the uploadFile step in version 1.0.2.
 
