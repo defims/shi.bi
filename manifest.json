@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Shi.Bi",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Command Shì'Bì maid to automate the browser from any webpage with JSON, which compatible with Chrome DevTools Recorder recordings.",
   "permissions": ["debugger", "scripting"],
   "host_permissions": ["<all_urls>"],
@@ -12,7 +12,8 @@
     {
       "matches": [
         "https://mp.weixin.qq.com/*",
-        "file://*.svg"
+        "file://*.svg",
+        "file://*.md"
       ],
       "js": ["content.js"],
       "run_at": "document_end"
